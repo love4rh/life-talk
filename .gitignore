@@ -1,3 +1,5 @@
+## java project
+
 # Compiled class file
 *.class
 
@@ -21,3 +23,37 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+.settings
+.project
+.classpath
+
+@doc/
+@conf/
+
+target/
+log/
+temporary/
+
+
+## react project
+
+# Build and Release Folders
+dist/
+build/
+
+# Other files and folders
+.settings/
+node_modules/
+
+# Executables
+*.swf
+*.air
+*.ipa
+*.apk
+
+# 
+package-lock.json
+*.log
+
+*.code-workspace

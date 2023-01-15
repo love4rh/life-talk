@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import * as T from './StyledElements';
+
+import TalkList from './TalkList';
 
 
 class MainFrame extends Component {
@@ -9,7 +12,14 @@ class MainFrame extends Component {
 
   render () {
     return (
-      <div>Hello World!!</div>
+      <T.WholeBox>
+        <T.HeaderWrap>
+          <T.Header>Header</T.Header>
+        </T.HeaderWrap>
+        <T.Container>
+          <TalkList />
+        </T.Container>
+      </T.WholeBox>
     );
   }
 

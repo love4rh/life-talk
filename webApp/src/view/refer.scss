@@ -1,0 +1,43 @@
+$menuLeft: 44px;
+$menuHeight: 48px;
+
+// $contentFGColor: #CCC;
+// $contentBGColor: #1E1E1E;
+// $contentSideColor: #252526;
+
+$contentFGColor: #000;
+$contentBGColor: white;
+$contentSideColor: white;
+
+$scrollBGColor: #1E1E1E;
+$scrollThumbColor: #4E4E4E;
+
+$menuBGColor: #3C3C3C;
+$menuBorderColor: #007FD4;
+
+$itemSelectColor: #214d7b;
+
+$subContentBGFolor: #272822;
+
+
+.referenceColor {
+  color: #d62728; // 0
+  color: #7f7f7f; // 1
+  color: #bcbd22; // 2
+  color: #17becf; // 3
+  color: #1f77b4; // 4
+  color: #ff7f0e; // 5
+  color: #9467bd; // 6
+  color: #2ca02c; // 7
+  color: #8c564b; // 8
+  color: #e377c2; // 9
+  color: #dedfad;
+  color: #252526;
+  color: #9cdfff;
+}
+
+
+.sample{
+  font-weight: bolder;
+  font-size: 1.1rem;
+}

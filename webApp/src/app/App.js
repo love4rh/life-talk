@@ -26,8 +26,6 @@ const darkTheme = createTheme(
 );
 
 
-console.log(darkTheme);
-
 
 class App extends Component {
   constructor (props) {

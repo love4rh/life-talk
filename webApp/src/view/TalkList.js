@@ -10,9 +10,16 @@ class TalkList extends Component {
 
   render () {
     return (
-      <div>
-        Talk List
-      </div>
+      <T.ListBox>
+        <T.ListBoxItem>
+          <T.ListBoxIcon>Icon</T.ListBoxIcon>
+          <T.ListBoxBody>
+            <T.ListBoxTitle>Title</T.ListBoxTitle>
+            <T.ListBoxMessage>Last message</T.ListBoxMessage>
+          </T.ListBoxBody>
+          <T.ListBoxTime>Time</T.ListBoxTime>
+        </T.ListBoxItem>
+      </T.ListBox>
     );
   }
 

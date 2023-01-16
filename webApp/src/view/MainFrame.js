@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import * as T from './StyledElements';
 
 import TalkList from './TalkList';
+import TalkBoard from './TalkBoard';
+
 
 
 class MainFrame extends Component {
@@ -11,16 +13,29 @@ class MainFrame extends Component {
   }
 
   render () {
-    return (
-      <T.WholeBox>
-        <T.HeaderWrap>
-          <T.Header>Header</T.Header>
-        </T.HeaderWrap>
-        <T.Container>
-          <TalkList />
-        </T.Container>
-      </T.WholeBox>
-    );
+    const panelColor = ['#141414', '#1f1f1f'];
+
+    return (<T.WholeBox>
+      <T.HStack>
+
+        <T.VStack width={'300px'}>
+          <T.Header bgColor={panelColor[0]}>Talk List</T.Header>
+          <T.Container bgColor={panelColor[0]}>
+            <TalkList />
+          </T.Container>
+        </T.VStack>
+
+        <T.Box width={5}>&nbsp;</T.Box>
+
+        <T.VStack width={'730px'}>
+        <T.Header bgColor={panelColor[1]}>Talk Detail</T.Header>
+          <T.Container bgColor={panelColor[1]}>
+            <TalkBoard />
+          </T.Container>
+        </T.VStack>
+
+      </T.HStack>
+    </T.WholeBox>);
   }
 
 };

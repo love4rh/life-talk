@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './App.scss';
+import styled from 'styled-components';
 
 import { isundef, isvalid } from '../common/common';
 
@@ -26,6 +26,38 @@ const darkTheme = createTheme(
 );
 
 
+const T = {
+  App: styled.div`
+    margin: 0;
+    padding: 0;
+  `,
+
+  Overay: styled.div`
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: progress;
+  `,
+
+  WholeMessage: styled.div`
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    color: blue;
+  `
+};
+
+
 
 class App extends Component {
   constructor (props) {
@@ -35,6 +67,8 @@ class App extends Component {
     // const adminMode = pageUrl.endsWith('/admin');
 
     this.state = {
+      cw: window.innerWidth,
+      ch: window.innerHeight,
       initialized: true,
       waiting: false,
       appData: new AppData(this),
@@ -48,7 +82,17 @@ class App extends Component {
   }
 
   componentDidMount () {
+    window.addEventListener('resize', this.onWindowResize);
+
     // TODO Intialize Code
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.onWindowResize);
+  }
+
+  onWindowResize = () => {
+    this.setState({ cw: window.innerWidth, ch: window.innerHeight });
   }
 
   /**
@@ -99,9 +143,9 @@ class App extends Component {
 
     // Snackbar severity="success" error warning info 
 
-    return (<div className="App">
+    return (<T.App>
       <ThemeProvider theme={darkTheme}>
-        { initialized ? this.renderPage() : <div className="App-whole-message">Initializing...</div> }
+        { initialized ? this.renderPage() : <T.WholeMessage>Initializing...</T.WholeMessage> }
 
         { messageOn && 
           <Snackbar
@@ -115,9 +159,9 @@ class App extends Component {
           </Snackbar>
         }
 
-        { authorized && waiting && <div className="App-overay"><CircularProgress /></div> }
+        { authorized && waiting && <T.Overay><CircularProgress /></T.Overay> }
        </ThemeProvider>
-    </div>);
+    </T.App>);
   }
 }
 

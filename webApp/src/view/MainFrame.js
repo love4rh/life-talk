@@ -18,7 +18,7 @@ class MainFrame extends Component {
     return (<T.WholeBox>
       <T.HStack>
 
-        <T.VStack width={'300px'}>
+        <T.VStack width={'360px'}>
           <T.Header bgColor={panelColor[0]}>Talk List</T.Header>
           <T.Container bgColor={panelColor[0]}>
             <TalkList />
@@ -27,7 +27,7 @@ class MainFrame extends Component {
 
         <T.Box width={5}>&nbsp;</T.Box>
 
-        <T.VStack width={'730px'}>
+        <T.VStack width={'760px'}>
         <T.Header bgColor={panelColor[1]}>Talk Detail</T.Header>
           <T.Container bgColor={panelColor[1]}>
             <TalkBoard />

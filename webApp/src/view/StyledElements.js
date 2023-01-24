@@ -1,15 +1,13 @@
 import styled from 'styled-components';
 
+import { Dark as Theme } from '../common/theme';
+
 // refer: https://velog.io/@sorious77/React-Styled-Components-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95-e9o4rnfq
 
-const bgScreen = '#0a0a0a';
 
-const headerHeight = 54;
-const containerWidth = 730;
-const lineHeight = 54;
-const inputHeight = 36;
+const scrollBGColor = '#1E1E1E';
+const scrollThumbColor = '#4E4E4E';
 
-const headerColor = '#dbdbdb';
 
 
 export const WholeBox = styled.div`
@@ -19,7 +17,7 @@ export const WholeBox = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: ${bgScreen};
+  background-color: ${Theme.bgScreen};
 `;
 
 export const Box = styled.div`
@@ -31,43 +29,46 @@ export const Box = styled.div`
 
 export const ScrollStyledDiv = styled.div`
   overflow-y: auto;
+
   &::-webkit-scrollbar {
     display: none;
     width: 12px; /*스크롤바의 너비*/
-    background-color: $scrollBGColor; /*스크롤바의 색상*/
+    background-color: ${scrollBGColor}; /*스크롤바의 색상*/
   }
   
   &::-webkit-scrollbar-thumb {
-    background-color: $scrollThumbColor; /*스크롤바의 색상*/
+    background-color: ${scrollThumbColor}; /*스크롤바의 색상*/
     background-clip: padding-box;
     border: 1px solid transparent;
     border-radius: 6px;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: $scrollBGColor; /*스크롤바 트랙 색상*/
+    background-color: ${scrollBGColor}; /*스크롤바 트랙 색상*/
   }
 `;
 
 
 export const HStack = styled.div`
   height: ${(p) => p.height || '100%'};
+  width: 100%;
   display: flex;
   flex-direction: row;
 `;
 
 export const VStack = styled.div`
+  height: 100%;
   width: ${(p) => p.width || '100%'};
   display: flex;
   flex-direction: column;
 `;
 
 export const Header = styled.div`
-  height: ${headerHeight}px;
+  height: ${Theme.headerHeight}px;
   color: #dbdbdb;
-  background-color: ${(p) => p.bgColor || bgScreen};
+  background-color: ${(p) => p.bgColor || Theme.bgScreen};
   width: 100%;
-  border-bottom: 1px solid ${bgScreen};
+  border-bottom: 1px solid ${Theme.bgScreen};
   display: flex;
   align-items: center;
 `;
@@ -76,9 +77,9 @@ export const Container = styled(ScrollStyledDiv)`
   flex: 1;
   width: 100%;
   color: #dbdbdb;
-  background-color: ${(p) => p.bgColor || bgScreen};
-  height: calc(100vh - ${headerHeight}px);
-  border-top: 1px solid ${bgScreen};
+  background-color: ${(p) => p.bgColor || Theme.bgScreen};
+  height: calc(100vh - ${Theme.headerHeight}px);
+  border-top: 1px solid ${Theme.bgScreen};
 `;
 
 
@@ -87,23 +88,41 @@ export const Container = styled(ScrollStyledDiv)`
 export const ListBox = styled.div`
   flex: 1;
   width: ${(p) => p.width || '100%'};
-  height: calc(100vh - ${headerHeight}px);
-  max-width: ${containerWidth}px;
+  height: calc(100vh - ${Theme.headerHeight}px);
 `;
 
 export const ListBoxItem = styled.div`
   cursor: pointer;
   display: flex;
-  height: ${lineHeight}px;
+  height: ${Theme.lineHeight}px;
+  color: ${Theme.fontColor};
+  border-left: 5px solid ${(p) => p.selected ? Theme.selectedItemColor : 'rgba(0, 0, 0, 1.0)'};
 
   &:hover {
-    background-color: white;
+    background-color: ${Theme.selectedBgColor};
   }
+
+  display: flex;
+  align-items: center;
+  // justify-content: center;
+`;
+
+export const ListBoxLabel = styled.div`
+  height: ${Theme.lineHeight}px;
+  color: ${Theme.listLabelColor};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* &:not(:first-child) {
+    margin: 5px;
+    border-top: 1px solid ${Theme.separatorColor};
+  } */
 `;
 
 export const ListBoxIcon = styled.div`
-  width: ${lineHeight}px;
-  height: ${lineHeight}px;
+  width: ${Theme.lineHeight}px;
+  height: ${Theme.lineHeight}px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,11 +149,17 @@ export const ListBoxMessage = styled.div`
 
 export const ListBoxTime = styled.div`
   color: #aaa;
-  width: ${lineHeight}px;
-  height: ${lineHeight}px;
+  width: ${Theme.lineHeight}px;
+  height: ${Theme.lineHeight}px;
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const ListBoxSeparator = styled.div`
+  margin: 5px;
+  border-bottom: 1px solid ${Theme.separatorColor};
+  content: "";
 `;
 
 
@@ -154,8 +179,8 @@ export const TalkBoard = styled.div`
 `;
 
 export const TalkInputBox = styled.div`
-  height: ${inputHeight}px;
+  height: ${Theme.inputHeight}px;
   border: 1px #999 solid;
-  max-height: ${inputHeight * 2}px;
+  max-height: ${Theme.inputHeight * 2}px;
 `;
 

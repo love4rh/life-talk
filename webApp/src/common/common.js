@@ -129,6 +129,24 @@ export const dateToYYYYMMDDBySep = (dt, sep) => {
   return [ dt.getFullYear(), pad2(MM), pad2(dd) ].join(sep);
 }
 
+// 날짜 중 월/일 만 표시
+export const mmdd = (tick, sep) => {
+  const dt = new Date(tick)
+  const MM = dt.getMonth() + 1; // getMonth() is zero-based
+  const dd = dt.getDate();
+
+  return pad2(MM) + (sep || '/') + pad2(dd);
+}
+
+// 날짜 중 시/분 만 표시
+export const hhmm = (tick, sep) => {
+  const dt = new Date(tick)
+  const hh = dt.getHours();
+  const mm = dt.getMinutes();
+
+  return pad2(hh) + (sep || ':') + pad2(mm);
+}
+
 /**
  * 객체 obj에 method가 있으면 호출한 결과를 반환하고 없으면 null 반환
  * @param {*} obj 

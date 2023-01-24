@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Dark as Theme } from '../common/theme';
+
 import * as T from './StyledElements';
 
 import TalkList from './TalkList';
@@ -10,32 +12,60 @@ import TalkBoard from './TalkBoard';
 class MainFrame extends Component {
   constructor (props) {
     super(props);
+
+    const { cw, ch } = this.props;
+
+    this.state = {
+      cw, ch,
+      pageMode: 'list'
+    }
+  }
+
+  static getDerivedStateFromProps(props, prevState) {
+    const { cw, ch } = props;
+
+    if( prevState.cw !== cw || prevState.ch !== ch ) {
+      return { cw, ch };
+    }
+
+    return null;
   }
 
   render () {
-    const panelColor = ['#141414', '#1f1f1f'];
+    const boxClr = Theme.panelColor;
+    const { pageMode, cw } = this.state;
 
-    return (<T.WholeBox>
-      <T.HStack>
+    const singleMode = cw < 815;
+    const listWidth = singleMode ? Math.min(cw, 760) : Math.min(360, (cw - 5) * 0.32);
+    const talkWidth = singleMode ? Math.min(cw, 760) : Math.min(760, cw - 5 - listWidth);
 
-        <T.VStack width={'360px'}>
-          <T.Header bgColor={panelColor[0]}>Talk List</T.Header>
-          <T.Container bgColor={panelColor[0]}>
-            <TalkList />
-          </T.Container>
-        </T.VStack>
+    return (
+      <T.WholeBox>
+        <T.HStack>
 
-        <T.Box width={5}>&nbsp;</T.Box>
+          { (!singleMode || pageMode === 'list') &&
+            <T.VStack width={`${listWidth}px`}>
+              <T.Header bgColor={boxClr[0]}>Talk List</T.Header>
+              <T.Container bgColor={boxClr[0]}>
+                <TalkList />
+              </T.Container>
+            </T.VStack>
+          }
 
-        <T.VStack width={'760px'}>
-        <T.Header bgColor={panelColor[1]}>Talk Detail</T.Header>
-          <T.Container bgColor={panelColor[1]}>
-            <TalkBoard />
-          </T.Container>
-        </T.VStack>
+          { !singleMode && <T.Box width={5}>&nbsp;</T.Box> }
 
-      </T.HStack>
-    </T.WholeBox>);
+          { (!singleMode || pageMode === 'talk') &&
+            <T.VStack width={`${talkWidth}px`}>
+              <T.Header bgColor={boxClr[1]}>Talk Detail</T.Header>
+              <T.Container bgColor={boxClr[1]}>
+                <TalkBoard />
+              </T.Container>
+            </T.VStack>
+          }
+
+        </T.HStack>
+      </T.WholeBox>
+    );
   }
 
 };

@@ -5,7 +5,10 @@
 const Dark = {
   bgScreen: '#0a0a0a', // screen default background color
   headerHeight: 54,
-  lineHeight: 36, // List item line height
+
+  listItemHeight: 58, // List item line height
+  timeColor: '#aaa',
+
   inputHeight: 36,
   fontColor: '#dbdbdb',
   panelColor: ['#141414', '#1f1f1f'],

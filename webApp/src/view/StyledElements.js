@@ -54,6 +54,7 @@ export const HStack = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 `;
 
 export const VStack = styled.div`
@@ -94,9 +95,9 @@ export const ListBox = styled.div`
 export const ListBoxItem = styled.div`
   cursor: pointer;
   display: flex;
-  height: ${Theme.lineHeight}px;
+  height: ${Theme.listItemHeight}px;
   color: ${Theme.fontColor};
-  border-left: 5px solid ${(p) => p.selected ? Theme.selectedItemColor : 'rgba(0, 0, 0, 1.0)'};
+  background-color: ${(p) => p && p.selected ? Theme.selectedBgColor : 'inherit'};
 
   &:hover {
     background-color: ${Theme.selectedBgColor};
@@ -108,7 +109,7 @@ export const ListBoxItem = styled.div`
 `;
 
 export const ListBoxLabel = styled.div`
-  height: ${Theme.lineHeight}px;
+  height: ${Theme.listItemHeight}px;
   color: ${Theme.listLabelColor};
   display: flex;
   align-items: center;
@@ -121,8 +122,8 @@ export const ListBoxLabel = styled.div`
 `;
 
 export const ListBoxIcon = styled.div`
-  width: ${Theme.lineHeight}px;
-  height: ${Theme.lineHeight}px;
+  width: ${Theme.listItemHeight}px;
+  height: ${Theme.listItemHeight}px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,20 +141,24 @@ export const ListBoxBody = styled.div`
 export const ListBoxTitle = styled.div`
   font-weight: bolder;
   font-size: 1.1rem;
+  text-overflow: ellipsis;
 `;
 
 export const ListBoxMessage = styled.div`
   color: #bbb;
   font-size: 0.9rem;
+  text-overflow: ellipsis;
 `;
 
 export const ListBoxTime = styled.div`
-  color: #aaa;
-  width: ${Theme.lineHeight}px;
-  height: ${Theme.lineHeight}px;
+  color: ${Theme.timeColor};;
+  font-family: monospace;
+  width: ${Theme.listItemHeight}px;
+  height: ${Theme.listItemHeight}px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 export const ListBoxSeparator = styled.div`

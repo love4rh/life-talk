@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+/*
 import styled from 'styled-components';
 
 
 const css = {
   //
 };
+// */
 
 
 class ImageMarker extends Component {
@@ -35,8 +37,8 @@ class ImageMarker extends Component {
 
     return (
       <svg width={size} height={size}>
-        <circle cx={cx} cy={cx} r={cx} stroke="none" stroke-width="0" fill={color} />
-        <text x={cx} y={cx - 1} fill={'black'} text-anchor="middle" dominant-baseline="central">{title[0]}</text>
+        <circle cx={cx} cy={cx} r={cx} stroke="none" strokeWidth="0" fill={color} />
+        <text x={cx} y={cx - 1} fill={'white'} textAnchor={`middle`} dominantBaseline={`central`}>{title[0]}</text>
       </svg>
     );
   }

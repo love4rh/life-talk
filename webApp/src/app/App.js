@@ -134,7 +134,9 @@ class App extends Component {
   };
 
   renderPage () {
-    return <MainFrame />;
+    const { cw, ch } = this.state;
+
+    return <MainFrame cw={cw} ch={ch} />;
   }
 
   render () {

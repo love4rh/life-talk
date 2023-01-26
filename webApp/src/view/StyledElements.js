@@ -100,7 +100,7 @@ export const ListBoxItem = styled.div`
   background-color: ${(p) => p && p.selected ? Theme.selectedBgColor : 'inherit'};
 
   &:hover {
-    background-color: ${Theme.selectedBgColor};
+    background-color: ${Theme.hoverBgColor};
   }
 
   display: flex;
@@ -130,6 +130,7 @@ export const ListBoxIcon = styled.div`
 `;
 
 export const ListBoxBody = styled.div`
+  width: ${(p) => p.width}px;
   flex: 1;
   margin-left: 5px;
   margin-right: 5px;
@@ -138,23 +139,33 @@ export const ListBoxBody = styled.div`
   justify-content: space-evenly;
 `;
 
+export const ListTitleLine = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const ListBoxTitle = styled.div`
-  font-weight: bolder;
-  font-size: 1.1rem;
+  flex: 1 1 auto;
+  font-weight: bold;
+  font-size: 1rem;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 export const ListBoxMessage = styled.div`
   color: #bbb;
   font-size: 0.9rem;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  // flex: 1 1 auto;
+  overflow: hidden;
 `;
 
 export const ListBoxTime = styled.div`
   color: ${Theme.timeColor};;
   font-family: monospace;
-  width: ${Theme.listItemHeight}px;
-  height: ${Theme.listItemHeight}px;
+  // width: ${Theme.listItemHeight}px;
   display: flex;
   flex-direction: column;
   justify-content: center;

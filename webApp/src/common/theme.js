@@ -13,6 +13,7 @@ const Dark = {
   fontColor: '#dbdbdb',
   panelColor: ['#141414', '#1f1f1f'],
   selectedBgColor: '#292929',
+  hoverBgColor: '#293029',
   selectedItemColor: '#007FD4',
   separatorColor: '#3C3C3C',
   listLabelColor: '#bcbd22',

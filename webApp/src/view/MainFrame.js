@@ -47,7 +47,7 @@ class MainFrame extends Component {
             <T.VStack width={`${listWidth}px`}>
               <T.Header bgColor={boxClr[0]}>Talk List</T.Header>
               <T.Container bgColor={boxClr[0]}>
-                <TalkList />
+                <TalkList cw={listWidth} />
               </T.Container>
             </T.VStack>
           }

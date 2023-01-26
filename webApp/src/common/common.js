@@ -1,5 +1,7 @@
 // const valueTypes = [ 'number', 'datetime', 'boolean', 'string', 'unknown' ];
 
+export const oneDayTick = 3600 * 24 * 1000;
+
 
 export const isundef = (o) => {
   return o === null || typeof(o) === 'undefined';
@@ -130,8 +132,7 @@ export const dateToYYYYMMDDBySep = (dt, sep) => {
 }
 
 // 날짜 중 월/일 만 표시
-export const mmdd = (tick, sep) => {
-  const dt = new Date(tick)
+export const mmdd = (dt, sep) => {
   const MM = dt.getMonth() + 1; // getMonth() is zero-based
   const dd = dt.getDate();
 
@@ -139,12 +140,19 @@ export const mmdd = (tick, sep) => {
 }
 
 // 날짜 중 시/분 만 표시
-export const hhmm = (tick, sep) => {
-  const dt = new Date(tick)
+export const hhmm = (dt, sep) => {
   const hh = dt.getHours();
   const mm = dt.getMinutes();
 
   return pad2(hh) + (sep || ':') + pad2(mm);
+}
+
+// 시간을 인간적으로 표시
+export const humanTime = (tick) => {
+  const dt = new Date(tick);
+  const now = new Date().getTime();
+
+  return Math.round(now / oneDayTick) === Math.round(tick / oneDayTick) ? hhmm(dt) : mmdd(dt);
 }
 
 /**

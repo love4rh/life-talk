@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
-import { mmdd, hhmm, tickCount } from '../common/common';
+import { humanTime } from '../common/common';
 
 import { Dark as Theme } from '../common/theme';
 import * as T from './StyledElements';
 
 import ImageMarker from '../component/ImageMarker';
+
+import { talkList } from '../mock/sample01';
 
 
 
@@ -13,33 +15,51 @@ class TalkList extends Component {
   constructor (props) {
     super(props);
 
+    const { cw } = this.props;
+
     this.state = {
-      talkList: [
-        { id: 't1', title: '일상', color: '#1f77b4', lastTalk: '마지막 메시지 어쩌구 저쩌구', time: tickCount() - 360000 },
-        { id: 't2', title: '업무', color: '#ff7f0e', lastTalk: '마지막 메시지 어쩌구 저쩌구', time: tickCount() - 30000 }
-      ],
+      cw,
+      talkList: talkList,
       selected: 't2',
     };
   }
 
+  static getDerivedStateFromProps(props, prevState) {
+    const { cw } = props;
+
+    if( prevState.cw !== cw ) {
+      return { cw };
+    }
+
+    return null;
+  }
+
+  handleClick = (itemId) => () => {
+    this.setState({ selected: itemId });
+  }
+
   render () {
-    const { talkList, selected } = this.state;
+    const { cw, talkList, selected } = this.state;
 
     return (
       <T.ListBox>
         { talkList.map((d, i) => (
-          <T.ListBoxItem key={`talkList-${i}`} selected={d.id === selected}>
+          <T.ListBoxItem
+            key={`talkList-${i}`}
+            selected={d.id === selected}
+            onClick={this.handleClick(d.id)}
+          >
             <T.ListBoxIcon>
               <ImageMarker size={Theme.listItemHeight - 16} title={d.title} color={d.color} />
             </T.ListBoxIcon>
-            <T.ListBoxBody>
-              <T.ListBoxTitle>{d.title}</T.ListBoxTitle>
+            <T.ListBoxBody width={cw - Theme.listItemHeight - 10}>
+              <T.ListTitleLine>
+                <T.ListBoxTitle>{d.title}</T.ListBoxTitle>
+                <T.ListBoxTime>{humanTime(d.time)}</T.ListBoxTime>
+              </T.ListTitleLine>
               <T.ListBoxMessage>{d.lastTalk}</T.ListBoxMessage>
             </T.ListBoxBody>
-            <T.ListBoxTime>
-              <div>{mmdd(d.time)}</div>
-              <div>{hhmm(d.time)}</div>
-            </T.ListBoxTime>
+            
           </T.ListBoxItem>)
         )}
       </T.ListBox>

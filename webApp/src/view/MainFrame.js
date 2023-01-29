@@ -7,6 +7,8 @@ import * as T from './StyledElements';
 import TalkList from './TalkList';
 import TalkBoard from './TalkBoard';
 
+import TextField from '@mui/material/TextField';
+
 
 
 class MainFrame extends Component {
@@ -32,7 +34,6 @@ class MainFrame extends Component {
   }
 
   render () {
-    const boxClr = Theme.panelColor;
     const { pageMode, cw } = this.state;
 
     const singleMode = cw < 815;
@@ -45,8 +46,8 @@ class MainFrame extends Component {
 
           { (!singleMode || pageMode === 'list') &&
             <T.VStack width={`${listWidth}px`}>
-              <T.Header bgColor={boxClr[0]}>Talk List</T.Header>
-              <T.Container bgColor={boxClr[0]}>
+              <T.CenteredHeader bgColor={Theme.listPanelColor}>Talk List</T.CenteredHeader>
+              <T.Container bgColor={Theme.listPanelColor}>
                 <TalkList cw={listWidth} />
               </T.Container>
             </T.VStack>
@@ -56,9 +57,18 @@ class MainFrame extends Component {
 
           { (!singleMode || pageMode === 'talk') &&
             <T.VStack width={`${talkWidth}px`}>
-              <T.Header bgColor={boxClr[1]}>Talk Detail</T.Header>
-              <T.Container bgColor={boxClr[1]}>
+              <T.CenteredHeader bgColor={Theme.talkPanelColor}>Talk Detail</T.CenteredHeader>
+              <T.Container bgColor={Theme.talkPanelColor}>
                 <TalkBoard />
+                <T.InputBox>
+                  <TextField
+                    hiddenLabel
+                    fullWidth
+                    multiline
+                    maxRows={2}
+                    size="small"
+                  />
+                </T.InputBox>
               </T.Container>
             </T.VStack>
           }

@@ -148,11 +148,36 @@ export const hhmm = (dt, sep) => {
 }
 
 // 시간을 인간적으로 표시
-export const humanTime = (tick) => {
+// 오늘일 경우, day가 true이면 "오늘" 아니면 시간표시
+// 2일 전까지는 "어제, 모레"로 표시
+// 2일 넘는 날은 날짜(mm/dd) 표시
+//
+export const humanTime = (tick, day) => {
   const dt = new Date(tick);
   const now = new Date().getTime();
 
-  return Math.round(now / oneDayTick) === Math.round(tick / oneDayTick) ? hhmm(dt) : mmdd(dt);
+  const dayDiff = Math.round(now / oneDayTick) - Math.round(tick / oneDayTick);
+
+  let ret = ''
+  switch( dayDiff ) {
+    case 0:
+      ret = istrue(day) ? '오늘' : hhmm(dt);
+      break;
+    
+    case 1:
+      ret = '어제';
+      break;
+
+    case 2:
+      ret = '모레';
+      break;
+
+    default:
+      ret = mmdd(dt);
+      break;
+  }
+
+  return ret;
 }
 
 /**

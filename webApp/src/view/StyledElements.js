@@ -21,7 +21,7 @@ export const WholeBox = styled.div`
 `;
 
 export const Box = styled.div`
-  width: ${(p) => p.width || 5};
+  width: ${({ width }) => width || 5};
   height: 100px;
 `;
 
@@ -50,7 +50,7 @@ export const ScrollStyledDiv = styled.div`
 
 
 export const HStack = styled.div`
-  height: ${(p) => p.height || '100%'};
+  height: ${({ height }) => height || '100%'};
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -59,28 +59,36 @@ export const HStack = styled.div`
 
 export const VStack = styled.div`
   height: 100%;
-  width: ${(p) => p.width || '100%'};
+  width: ${({ width }) => width || '100%'};
   display: flex;
   flex-direction: column;
 `;
 
 export const Header = styled.div`
   height: ${Theme.headerHeight}px;
-  color: #dbdbdb;
-  background-color: ${(p) => p.bgColor || Theme.bgScreen};
+  color: ${Theme.titleColor};
+  background-color: ${({ bgColor }) => bgColor || Theme.bgScreen};
   width: 100%;
   border-bottom: 1px solid ${Theme.bgScreen};
   display: flex;
   align-items: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+`;
+
+export const CenteredHeader = styled(Header)`
+  justify-content: center;
 `;
 
 export const Container = styled(ScrollStyledDiv)`
   flex: 1;
   width: 100%;
-  color: #dbdbdb;
-  background-color: ${(p) => p.bgColor || Theme.bgScreen};
+  color:  ${Theme.fontColor};;
+  background-color: ${({ bgColor }) => bgColor || Theme.bgScreen};
   height: calc(100vh - ${Theme.headerHeight}px);
   border-top: 1px solid ${Theme.bgScreen};
+  display: flex;
+  flex-direction: column;
 `;
 
 
@@ -88,7 +96,7 @@ export const Container = styled(ScrollStyledDiv)`
 
 export const ListBox = styled.div`
   flex: 1;
-  width: ${(p) => p.width || '100%'};
+  width: ${({ width }) => width || '100%'};
   height: calc(100vh - ${Theme.headerHeight}px);
 `;
 
@@ -97,7 +105,7 @@ export const ListBoxItem = styled.div`
   display: flex;
   height: ${Theme.listItemHeight}px;
   color: ${Theme.fontColor};
-  background-color: ${(p) => p && p.selected ? Theme.selectedBgColor : 'inherit'};
+  background-color: ${({ selected }) => selected ? Theme.selectedBgColor : 'inherit'};
 
   &:hover {
     background-color: ${Theme.hoverBgColor};
@@ -130,7 +138,7 @@ export const ListBoxIcon = styled.div`
 `;
 
 export const ListBoxBody = styled.div`
-  width: ${(p) => p.width}px;
+  width: ${({ width }) => width}px;
   flex: 1;
   margin-left: 5px;
   margin-right: 5px;
@@ -163,13 +171,14 @@ export const ListBoxMessage = styled.div`
 `;
 
 export const ListBoxTime = styled.div`
-  color: ${Theme.timeColor};;
+  color: ${Theme.listTimeColor};;
   font-family: monospace;
   // width: ${Theme.listItemHeight}px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+  width: 45px;
 `;
 
 export const ListBoxSeparator = styled.div`
@@ -182,21 +191,35 @@ export const ListBoxSeparator = styled.div`
 
 // TalkBoard
 
-export const TalkBox = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 export const TalkBoard = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  flex: 1 1;
 `;
 
-export const TalkInputBox = styled.div`
-  height: ${Theme.inputHeight}px;
+export const TalkBox = styled.div`
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+`;
+
+export const TalkText = styled.div`
+  background-color: ${Theme.talkBoxBgColor};
+  border-radius: 5px;
+  padding: 10px;
+  flex-grow: ${({ fullWidth }) => fullWidth ? 1 : 0};
+  white-space: pre-wrap;
+  word-break: break-word;
+`;
+
+export const TalkTime = styled.div`
+  margin-left: 7px;
+  color: ${Theme.talkTimeColor};
+  font-size: 0.9rem;
+`;
+
+
+// InputBox
+export const InputBox = styled.div`
   border: 1px #999 solid;
-  max-height: ${Theme.inputHeight * 2}px;
+  margin: 2px 0;
 `;
 

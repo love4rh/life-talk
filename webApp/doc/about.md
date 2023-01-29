@@ -6,3 +6,6 @@ node-sass
 
 yarn add axios node-sass @mui/material @emotion/react @emotion/styled @mui/styled-engine-sc styled-components
 
+
+
+// react animation library

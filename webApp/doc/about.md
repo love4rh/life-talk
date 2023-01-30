@@ -9,3 +9,33 @@ yarn add axios node-sass @mui/material @emotion/react @emotion/styled @mui/style
 
 
 // react animation library
+
+
+
+
+// paste image from clipboard
+https://jsfiddle.net/techiedelight/nj1vhs3b/
+
+document.onpaste = function(pasteEvent) {
+  var item = pasteEvent.clipboardData.items[0];
+
+  if (item.type.indexOf("image") === 0) {
+    var blob = item.getAsFile();
+    
+    console.log(blob);
+
+    var reader = new FileReader();
+    reader.onload = function(event) {
+      console.log(event.target.result);
+      document.getElementById("container").src = event.target.result;
+    };
+
+    reader.readAsDataURL(blob); // image blob to base64 encoded string
+  }
+}
+
+
+
+// base64 to image
+https://stackoverflow.com/questions/21227078/convert-base64-to-image-in-javascript-jquery
+

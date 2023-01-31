@@ -1,0 +1,26 @@
+app:
+  id: "spp-statbase"
+  name: "Dashboard for Sponsored"
+  version: 1.0
+
+folder:
+  temporary: "./temporary"
+  vroot: "./webApp/build"
+
+network:
+  port: 9099
+  bossThread: 1
+  workerThread: 4
+
+setting:
+  withConsole: true
+  authCheck: true
+
+logging:
+  level: 2 # 1: basic, 2: call parameter & response, 9: packet
+  useFile: true
+  path: "./log"
+  prefix: "statbase"
+
+data:
+  path: "/home/ibs/mhkim/data/statBase"

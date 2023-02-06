@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import { connectAppData } from '../app/AppData';
 
 import { Dark as Theme } from '../common/theme';
 
@@ -6,12 +9,17 @@ import * as T from './StyledElements';
 
 import TalkList from './TalkList';
 import TalkBoard from './TalkBoard';
-
-import TextField from '@mui/material/TextField';
+import TalkInput from './TalkInput';
+import { makeid } from '../common/common';
 
 
 
 class MainFrame extends Component {
+  static propTypes = {
+    ch: PropTypes.number.isRequired, // component height
+    cw: PropTypes.number.isRequired, // component width
+  }
+
   constructor (props) {
     super(props);
 
@@ -19,8 +27,13 @@ class MainFrame extends Component {
 
     this.state = {
       cw, ch,
-      pageMode: 'list'
-    }
+      pageMode: 'list',
+      objID: makeid(16)
+    };
+  }
+
+  componentDidMount () {
+    connectAppData(this);
   }
 
   static getDerivedStateFromProps(props, prevState) {
@@ -34,14 +47,14 @@ class MainFrame extends Component {
   }
 
   render () {
-    const { pageMode, cw } = this.state;
+    const { updatedTick, pageMode, cw } = this.state;
 
     const singleMode = cw < 815;
     const listWidth = singleMode ? Math.min(cw, 760) : Math.min(360, (cw - 5) * 0.32);
     const talkWidth = singleMode ? Math.min(cw, 760) : Math.min(760, cw - 5 - listWidth);
 
     return (
-      <T.WholeBox>
+      <T.WholeBox key={`main-wrap-${updatedTick}`}>
         <T.HStack>
 
           { (!singleMode || pageMode === 'list') &&
@@ -57,18 +70,10 @@ class MainFrame extends Component {
 
           { (!singleMode || pageMode === 'talk') &&
             <T.VStack width={`${talkWidth}px`}>
-              <T.CenteredHeader bgColor={Theme.talkPanelColor}>Talk Detail</T.CenteredHeader>
+              <T.CenteredHeader bgColor={Theme.talkPanelColor}>Talk Board</T.CenteredHeader>
               <T.Container bgColor={Theme.talkPanelColor}>
-                <TalkBoard />
-                <T.InputBox>
-                  <TextField
-                    hiddenLabel
-                    fullWidth
-                    multiline
-                    maxRows={2}
-                    size="small"
-                  />
-                </T.InputBox>
+                <TalkBoard  />
+                <TalkInput />
               </T.Container>
             </T.VStack>
           }

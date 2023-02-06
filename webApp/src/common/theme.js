@@ -18,8 +18,10 @@ const Dark = {
   talkBoxBgColor: '#292929',
   talkTimeColor: '#AAA',
 
+  separatorLineColor: '#17becf', // Talk 구분선 색상
+  separatorFontColor: '#dbdbdb', // Talk 구분선 제목
+
   inputHeight: 36,
-  
 
   selectedBgColor: '#292929',
   hoverBgColor: '#292C29',

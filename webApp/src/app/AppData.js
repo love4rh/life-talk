@@ -1,76 +1,77 @@
 // eslint-disable-next-line
-import { dateToYYYYMMDDBySep, isIn, istrue, tickCount, isvalid, isundef } from '../common/common.js';
+import { makeid, cp, istrue, tickCount, isvalid, isundef } from '../common/common.js';
 
-import Proxy from './ServerProxy';
+// 대표 데이터 객체
+let _globalAppData_ = null;
 
 
 class AppData {
-  constructor (appObj) {
-    this._storageKey = 'vadarbase-option';
+  constructor (appObj, initialData) {
+    if( isundef(_globalAppData_) ) {
+      _globalAppData_ = this;
+    }
+
     this._app = appObj;
-    this._observer = []; // AppData의 이벤트를 받을 객체 리스트
-  }
+    this._appDataID = makeid(16);
 
-  initializeData = (cb) => {
-    this._updatedTick = tickCount();
+    this._observer = [];
 
-    this._settings = {
-      startDate: '',
-      endDate: '',
-      cp: 'tubi'
-    };
+    this.updatedTick = tickCount();
+    this._data_ = cp(initialData);
 
-    const optData = localStorage.getItem(this._storageKey);
-    if( isvalid(optData) ) {
-      const dataObj = JSON.parse(optData);
-
-      this._settings = { ...this._settings, ...dataObj.settings };
-    }
-
-    console.log('appData Settings', this._settings);
-
-    if( window.$appConfig$.debugOn ) {
-      this._resultStat = {};
-      if( cb ) {
-        cb(true);
-      }
-    } else {
-      const now = tickCount() - 1 * 24 * 3600 * 1000;
-      const prev = now; // - 7 * 24 * 3600 * 1000;
-
-      this.fetchStat(dateToYYYYMMDDBySep(new Date(prev), '-'), dateToYYYYMMDDBySep(new Date(now), '-'), 'EST', (isOK) => {
-        if( cb ) {
-          cb(true);
-        }
-      });
-    }
-  }
-
-  saveOptions = () => {
-    localStorage.setItem(this._storageKey, JSON.stringify({
-      settings: this._settings,
-    }));
+    console.log('AppData constructed', initialData);
   }
 
   unmount = () => {
     // unmount 시 해야 할 일들
-    this.saveOptions();
     this._observer = [];
   }
 
-  addObserver = (elem) => {
-    if( isIn(elem, this._observer) ) {
+  showInstantMessage = (msg, severity, duration) => {
+    this._app.showInstantMessage(msg, severity, duration);
+  }
+
+  /**
+   * App 데이터와 React Component를 연결하기 위한 메소드.
+   * 생성자에서 호출하지 말고 componentDidMount()에서 호출해야 함.
+   * @param {*} elem 연결할 React Component 객체.
+   * @param {*} keys 연결할 데이터 키 목록. 지정하지 않으면 initial data로 설정한 모든 데이터를 연결함
+   * @returns 
+   */
+  connect = (elem, keys) => {
+    if( isvalid(elem._appDataObjectKey_) ) {
+      console.log('appData connect', 'already registered', elem._appDataObjectKey_);
       return;
     }
 
-    if( 'onAppDataEvent' in elem ) {
-      this._observer.push(elem);
-    } else {
-      console.log('observer must have onAppDataEvent handler.', elem);
+    elem._appDataObjectKey_ = makeid(16);
+    this._observer.push(elem);
+
+    elem.setState({ updatedTick: this.updatedTick, ...this._data_ });
+
+    if( !('_onAppDataEvent_' in elem) ) {
+      elem._onAppDataEvent_ = (dataKey, data) => {
+        elem.setState({ [dataKey]: data });
+      }
     }
+
+    if( 'componentWillUnmount' in elem ) {
+      const originalUnmount = elem.componentWillUnmount.bind(elem);
+      elem.componentWillUnmount = () => {
+        this.disconnect(elem);
+        originalUnmount();
+      }
+    } else {
+      elem.componentWillUnmount = () => {
+        this.disconnect(elem);
+      }
+    }
+    // console.log('appData connect', this._observer);
   }
 
-  removeObserver = (elem) => {
+  disconnect = (elem) => {
+    delete elem._appDataObjectKey_;
+
     const ol = this._observer;
     const nl = [];
 
@@ -81,90 +82,71 @@ class AppData {
     }
 
     this._observer = nl;
+    // console.log('appData disconnect', this._observer);
   }
 
-  pulseEventToObserver = (eventId, option) => {
-    const ol = this._observer;
-    if( isundef(option) ) {
-      option = {};
-    }
-
-    option.tick = this.updatedTick(true);
-
-    for(var i = 0; i < ol.length; ++i) {
-      ol[i].onAppDataEvent(eventId, option);
-    }
-  }
-
-  updatedTick = (refresh) => {
+  updateTick = (refresh) => {
     if( istrue(refresh) ) {
-      this._updatedTick = tickCount();
+      this.updatedTick = tickCount();
     }
 
-    return this._updatedTick;
+    return this.updatedTick;
   }
 
-  showInstantMessage = (msg, severity, duration) => {
-    this._app.showInstantMessage(msg, severity, duration);
-  }
-
-  /**
-   * 이벤트를 받아 Observer에 전달하는 기능 수행.
-   * @param {string} evtType 발생한 이벤트를 구분하기 위한 문자열
-   * @param {object} option 이벤트 관련 정보 객체. 이벤트에 따라 달라짐. event 멤버에 UI 상에서 발생한 이벤트 객체가 보통 넘어옮.
-   */
-   triggerEvent = (evtType, option) => {
-    switch( evtType ) {
-      case 'canvasClick':
-        case 'linkClick':
-        this.pulseEventToObserver(evtType, {});
-        break;
-
-      default:
-        break;
+  pulseEventToObserver = (dataKey, data) => {
+    if( isundef(dataKey) ) {
+      dataKey = 'updatedTick';
+      data = this.updateTick(true);
     }
+
+    if( isundef(data) ) {
+      data = {};
+    }
+
+    this._observer.map((obj, i) => {
+      obj._onAppDataEvent_(dataKey, data);
+      return i;
+    })
   }
 
-  getStatResult = () => {
-    return this._resultStat;
-  }
+  updateData = (dataKey, data) => {
+    const oldData = this._data_[dataKey];
 
-  fetchStat = (sDate, eDate, timeZone, cb) => {
-    Proxy.fetch({
-      path: '/get',
-      waiting: false,
-      timeout: 10000,
-      data: { sDate, eDate, timeZone },
-      success: (res) => {
-        if( res && res.returnCode === 0 && res.response ) {
-          this._resultStat = res.response;
-          if( cb ) cb(true, this._resultStat);
-        } else {
-          // TODO
-          if( cb ) cb(false, {});
-        }
-      },
-      error: (err) => {
-        if( cb ) cb(false, err);
-      }
-    });
-  }
+    this._data_[dataKey] = data;
+    this.updateTick(true)
 
-  download = (sDate, eDate, timeZone, cb) => {
-    Proxy.download({
-      path: '/download',
-      waiting: false,
-      timeout: 10000,
-      data: { sDate, eDate, timeZone },
-      success: (res) => {
-          if( cb ) cb(true);
-      },
-      error: (err) => {
-        if( cb ) cb(false);
-      }
-    });
+    // console.log('AppData changed [', dataKey, ']', oldData, 'to', data);
+
+    this.pulseEventToObserver(dataKey, data);
   }
 };
+
+
+export const setGlobalAppData = (obj) => {
+  _globalAppData_ = obj;
+}
+
+export const getGlobalAppData = () => {
+  return _globalAppData_;
+}
+
+export const connectAppData = (obj, keys) => {
+  if( isundef(_globalAppData_) ) {
+    console.error('connectAppData', 'global ApData not registered');
+    return;
+  }
+
+  _globalAppData_.connect(obj, keys)
+}
+
+export const updateAppData = (dataKey, data) => {
+  if( isundef(_globalAppData_) ) {
+    console.error('updateAppData', 'global ApData not registered');
+    return;
+  }
+
+  _globalAppData_.updateData(dataKey, data)
+}
 
 export default AppData;
 export { AppData };

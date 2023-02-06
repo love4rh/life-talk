@@ -9,6 +9,17 @@ export const talkList =
 ];
 
 
+/**
+ * Talk Type:
+ * - String
+ * - Image (Base64 encoded string)
+ * - URL (w/ String)
+ */
+export const talkMessage =
+[
+  { "a": "" }
+];
+
 // https://v.daum.net/v/VYETrUNFKN
 /*
 

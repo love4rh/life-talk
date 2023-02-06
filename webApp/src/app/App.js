@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
 import styled from 'styled-components';
-
 import { isundef, isvalid } from '../common/common';
 
-import Proxy from './ServerProxy';
-
 import { AppData } from './AppData';
+
+import Proxy from './ServerProxy';
 
 import { Snackbar, Alert, Slide, CircularProgress } from '@mui/material';
 
@@ -14,6 +13,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { koKR } from '@mui/material/locale';
 
 import MainFrame from '../view/MainFrame';
+
+import { talkList } from '../mock/sample01';
+
 
 
 const darkTheme = createTheme(
@@ -66,12 +68,19 @@ class App extends Component {
     // const pageUrl = window.location.href;
     // const adminMode = pageUrl.endsWith('/admin');
 
+    const appData = new AppData(this,
+      {
+        talkList: talkList,
+        currentBoardID: talkList[0].id,
+      }
+    );
+
     this.state = {
+      appData,
       cw: window.innerWidth,
       ch: window.innerHeight,
       initialized: true,
       waiting: false,
-      appData: new AppData(this),
       authorized: true,
       severity: 'info', // error warning success
       duration: 3500,
@@ -83,8 +92,6 @@ class App extends Component {
 
   componentDidMount () {
     window.addEventListener('resize', this.onWindowResize);
-
-    // TODO Intialize Code
   }
 
   componentWillUnmount () {

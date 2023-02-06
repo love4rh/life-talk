@@ -133,6 +133,10 @@ export const dateToYYYYMMDDBySep = (dt, sep) => {
 
 // 날짜 중 월/일 만 표시
 export const mmdd = (dt, sep) => {
+  if( typeof dt === 'number' ) {
+    dt = new Date(dt);
+  }
+
   const MM = dt.getMonth() + 1; // getMonth() is zero-based
   const dd = dt.getDate();
 
@@ -141,6 +145,10 @@ export const mmdd = (dt, sep) => {
 
 // 날짜 중 시/분 만 표시
 export const hhmm = (dt, sep) => {
+  if( typeof dt === 'number' ) {
+    dt = new Date(dt);
+  }
+  
   const hh = dt.getHours();
   const mm = dt.getMinutes();
 

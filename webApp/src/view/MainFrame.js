@@ -72,7 +72,7 @@ class MainFrame extends Component {
             <T.VStack width={`${talkWidth}px`}>
               <T.CenteredHeader bgColor={Theme.talkPanelColor}>Talk Board</T.CenteredHeader>
               <T.Container bgColor={Theme.talkPanelColor}>
-                <TalkBoard  />
+                <TalkBoard />
                 <TalkInput />
               </T.Container>
             </T.VStack>

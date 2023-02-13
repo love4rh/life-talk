@@ -595,3 +595,15 @@ export const revealURL = (s) => {
     return es[_indexInString(ds, c)];
   }).join('');
 }
+
+
+/**
+ * 문자열에서 URL을 추출
+ * @param {string} s 
+ * @returns 
+ */
+export const extractURLs = (s) => {
+  // eslint-disable-next-line
+  const urlRegEx = /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)/g;
+  return (s && s.match(urlRegEx)) || [];
+}

@@ -12,8 +12,8 @@ export const talkList =
 /**
  * Talk Type:
  * - String
- * - Image (Base64 encoded string)
- * - URL (w/ String)
+ *   w/ Image (Base64 encoded string)
+ *   w/ URL (w/ String)
  */
 export const talkMessage =
 [

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { isundef, makeid } from '../common/common';
 
+import parse from 'html-react-parser';
+
 import styled from 'styled-components';
 import { Dark as T } from '../common/theme';
 
@@ -16,7 +18,7 @@ const WrappedBox = styled.div`
   overflow: hidden;
 `;
 
-const TextArea = styled.textarea`
+const TextArea = styled.div`
   resize: none;
   border: none;
   width: 100%;
@@ -25,10 +27,10 @@ const TextArea = styled.textarea`
   background-color: ${T.talkPanelColor};
   color: ${T.fontColor};
   font-size: 1rem;
-  // min-height: calc(1rem + 6px);
-  // max-height: calc(2rem + 10px);
-  // overflow-y: auto;
-  // overflow-x: hidden;
+  min-height: calc(1rem + 6px);
+  max-height: calc(2rem + 10px);
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 
@@ -42,18 +44,15 @@ class TalkInput extends Component {
       textAreaID: 'talk-input-' + makeid(8),
       cw,
       talkText: '',
-      rowMax: 1,
     };
-
-    this._refText = React.createRef();
   }
 
   componentDidMount () {
-    document.addEventListener('paste', this.handlePaste);
+    // document.addEventListener('paste', this.handlePaste);
   }
 
   componentWillUnmount () {
-    document.removeEventListener('paste', this.handlePaste);
+    // document.removeEventListener('paste', this.handlePaste);
   }
 
   static getDerivedStateFromProps(props, prevState) {
@@ -67,11 +66,9 @@ class TalkInput extends Component {
   }
 
   setTalkText = (val) => {
-    const elem = this._refText.current;
-    const multiLines = val !== '' && (elem.scrollHeight > elem.clientHeight || val.indexOf('\n') !== -1);
+    console.log('setTalkText', val);
 
-    // console.log('setTalkText', val, elem.scrollHeight, elem.clientHeight);
-    this.setState({ talkText: val, rowMax: (multiLines ? 2 : 1) });
+    this.setState({ talkText: val });
   }
 
   handlePaste = (ev) => {
@@ -115,17 +112,19 @@ class TalkInput extends Component {
     }
   }
 
-  handleTextChanged = (ev) => {
+  handleTextInput = (ev) => {
     // console.log('TextChanged', ev.target.innerHTML);
-    this.setTalkText(ev.target.value);
+    this.setTalkText(ev.target.innerHTML);
   }
 
   render () {
-    const { textAreaID, talkText, rowMax } = this.state;
+    const { textAreaID, talkText } = this.state;
 
     return (
       <WrappedBox style={{ outline: 'none' }}>
-        <TextArea ref={this._refText} id={textAreaID} rows={rowMax} value={talkText} onChange={this.handleTextChanged} />
+        <TextArea id={textAreaID} contentEditable={true} suppressContentEditableWarning={true} onInput={this.handleTextInput}>
+          { parse(talkText) }
+        </TextArea>
       </WrappedBox>
     );
   }

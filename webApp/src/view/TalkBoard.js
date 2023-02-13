@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { tickCount } from '../common/common';
 
+import { connectAppData } from '../app/AppData';
+
 import TalkBox from './TalkBox';
 import TalkSeparator from './TalkSeparator';
 
@@ -19,9 +21,13 @@ class TalkBoard extends Component {
     super(props);
   }
 
+  componentDidMount () {
+    connectAppData(this);
+  }
+
   render () {
     const item = {
-      text: 'I want..\nThis would be a nice talking board.',
+      text: 'I want..\n<span>This would be a nice talking board.</span>',
       time: tickCount()
     }
 

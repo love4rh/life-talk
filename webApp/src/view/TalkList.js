@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { connectAppData, updateAppData } from '../app/AppData';
+import { connectAppData } from '../app/AppData';
+import { actChangeBoard } from '../view/actions';
 
-import { humanTime, isundef } from '../common/common';
+import { humanTime } from '../common/common';
 
 import { Dark as Theme } from '../common/theme';
 import * as T from './StyledElements';
@@ -28,12 +29,7 @@ class TalkList extends Component {
   }
 
   componentDidMount () {
-    document.addEventListener('paste', this.handlePaste);
     connectAppData(this);
-  }
-
-  componentWillUnmount () {
-    document.removeEventListener('paste', this.handlePaste);
   }
 
   static getDerivedStateFromProps(props, prevState) {
@@ -46,38 +42,8 @@ class TalkList extends Component {
     return null;
   }
 
-  handlePaste = (ev) => {
-    const item = ev.clipboardData.items[0];
-
-    if( isundef(item) ) {
-      return;
-    }
-
-    console.log('on paste', item);
-
-    // item.kind: string, file, 
-    const dtype = item.type;
-
-    if( dtype.indexOf('image') === 0 ) {
-      const blob = item.getAsFile();
-      console.log(blob);
-
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        console.log(event.target.result);
-        // document.getElementById("container").src = event.target.result;
-      };
-
-      reader.readAsDataURL(blob); // image blob to base64 encoded string
-    } else if( dtype.indexOf('text') === 0 ) {
-      item.getAsString((data) => {
-        console.log('text:', data);
-      });
-    }
-  }
-
-  handleClick = (itemId) => () => {
-    updateAppData('currentBoardID', itemId);
+  handleClick = (itemID) => () => {
+    actChangeBoard(itemID);
   }
 
   render () {

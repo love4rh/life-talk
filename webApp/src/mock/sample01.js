@@ -1,12 +1,50 @@
-import { tickCount, oneDayTick } from '../common/common';
+import { tickCount, oneDayTick, randomInteger } from '../common/common';
 
 
-export const talkList = 
-[
-  { "id": "t1", "title": "일상", "color": "#1f77b4", "lastTalk": "마지막 메시지 어쩌구 저쩌구", "time": tickCount() - 360000 },
-  { "id": "t2", "title": "업무", "color": "#ff7f0e", "lastTalk": "마지막 메시지 어쩌구 저쩌구 마지막 메시지 어쩌구 저쩌구", "time": tickCount() - 30000 },
-  { "id": "t3", "title": "This is message title to test long lines.", "color": "#ff7f0e", "lastTalk": "마지막 메시지 어쩌구 저쩌구 마지막 메시지 어쩌구 저쩌구", "time": tickCount() - oneDayTick * 2 }
+const circleColor = [
+  '#1f77b4', '#ff7f0e', '#9467bd', '#2ca02c', '#8c564b', '#e377c2'
 ];
+
+const messagePool = [
+  'I want...\nThis would be a nice talking board.',
+  '메시지 어쩌구 저쩌구',
+  '메시지 어쩌구 저쩌구 메시지 어쩌구 저쩌구 메시지 어쩌구 저쩌구 메시지 어쩌구 저쩌구',
+  'To use an SVG text element, you need to add a <text> element to your SVG code, then specify the position of the text using the x and y attributes. You can also set the text content using the text content of the <text> element. Here is an example:',
+  'The "idpiframe_initialization_failed" error message typically occurs when there is a problem loading or initializing an Identity Provider (IdP) in an IFrame. This error can occur due to various reasons such as network connectivity issues, compatibility issues with the browser, or configuration errors in the IdP. It often indicates a problem with the integration between the relying party website and the IdP and requires further investigation to determine the root cause and resolve the issue.'
+];
+
+
+const generateSamples = () => {
+  const titles = [ '일상', '업무', '아무개1', 'This is message title to test long lines.' ];
+
+  return titles.map((t, i) => {
+    const lastTime = tickCount() - randomInteger(oneDayTick * i, oneDayTick * (i + 0.5));
+    const firstTime = lastTime - oneDayTick * (i + 1);
+    const talkCount = randomInteger(5, 100);
+
+    let talks = [];
+    for(let j = 0; j < talkCount; ++j) {
+      talks.push({
+        text: messagePool[randomInteger(0, messagePool.length - 1)],
+        time: randomInteger(firstTime, lastTime)
+      });
+    }
+
+    talks = talks.sort((a, b) => a.time - b.time);
+
+    return {
+      id: `TALK-${i}`,
+      title: t,
+      color: circleColor[i % circleColor.length],
+      lastTalk: talks[talks.length - 1].text,
+      time: talks[talks.length - 1].time,
+      talks
+    }
+  }).sort((a, b) => b.time - a.time);
+}
+
+
+export const talkList = generateSamples();
 
 
 /**

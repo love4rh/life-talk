@@ -42,20 +42,22 @@ class TalkList extends Component {
     return null;
   }
 
-  handleClick = (itemID) => () => {
-    actChangeBoard(itemID);
+  handleClick = (index) => () => {
+    actChangeBoard(index);
   }
 
   render () {
-    const { cw, talkList, currentBoardID } = this.state;
+    const { cw, talkList, curTalkIndex } = this.state;
+
+    if( !talkList ) return null;
 
     return (
-      <T.ListBox key={`tl-${currentBoardID}`}>
-        { talkList && talkList.map((d, i) => (
+      <T.ListBox key={`tl-${curTalkIndex}`}>
+        { talkList && talkList.map((d, idx) => (
           <T.ListBoxItem
-            key={`talkList-${i}`}
-            selected={d.id === currentBoardID}
-            onClick={this.handleClick(d.id)}
+            key={`talkList-${idx}`}
+            selected={idx === curTalkIndex}
+            onClick={this.handleClick(idx)}
           >
             <T.ListBoxIcon>
               <ImageMarker size={Theme.listItemHeight - 16} title={d.title} color={d.color} />

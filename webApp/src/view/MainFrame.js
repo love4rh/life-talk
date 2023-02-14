@@ -47,11 +47,15 @@ class MainFrame extends Component {
   }
 
   render () {
-    const { updatedTick, pageMode, cw } = this.state;
+    const { talkList, curTalkIndex, updatedTick, pageMode, cw } = this.state;
+
+    if( !updatedTick ) return null;
 
     const singleMode = cw < 815;
     const listWidth = singleMode ? Math.min(cw, 760) : Math.min(360, (cw - 5) * 0.32);
     const talkWidth = singleMode ? Math.min(cw, 760) : Math.min(760, cw - 5 - listWidth);
+
+    const curTalk = talkList[curTalkIndex];
 
     return (
       <T.WholeBox key={`main-wrap-${updatedTick}`}>
@@ -70,8 +74,8 @@ class MainFrame extends Component {
 
           { (!singleMode || pageMode === 'talk') &&
             <T.VStack width={`${talkWidth}px`}>
-              <T.CenteredHeader bgColor={Theme.talkPanelColor}>Talk Board</T.CenteredHeader>
-              <T.Container bgColor={Theme.talkPanelColor}>
+              <T.CenteredHeader bgColor={Theme.talkPanelColor}>{curTalk && curTalk.title}</T.CenteredHeader>
+              <T.Container key={`talkarea-${curTalkIndex}`} bgColor={Theme.talkPanelColor}>
                 <TalkBoard />
                 <TalkInput />
               </T.Container>

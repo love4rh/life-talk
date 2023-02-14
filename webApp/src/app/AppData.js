@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { makeid, cp, istrue, tickCount, isvalid, isundef } from '../common/common.js';
+import { makeid, istrue, tickCount, isvalid, isundef } from '../common/common.js';
 
 // 대표 데이터 객체
 let _globalAppData_ = null;
@@ -17,9 +17,9 @@ class AppData {
     this._observer = [];
 
     this.updatedTick = tickCount();
-    this._data_ = cp(initialData);
+    this._data_ = initialData;
 
-    console.log('AppData constructed', initialData);
+    console.log('AppData constructed', this._data_);
   }
 
   unmount = () => {
@@ -110,8 +110,7 @@ class AppData {
   }
 
   updateData = (dataKey, data) => {
-    const oldData = this._data_[dataKey];
-
+    // const oldData = this._data_[dataKey];
     this._data_[dataKey] = data;
     this.updateTick(true)
 

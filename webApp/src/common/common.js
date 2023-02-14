@@ -156,11 +156,11 @@ export const hhmm = (dt, sep) => {
 }
 
 // 시간을 인간적으로 표시
-// 오늘일 경우, day가 true이면 "오늘" 아니면 시간표시
+// 오늘일 경우, todayName가 true이면 "오늘" 아니면 시간표시
 // 2일 전까지는 "어제, 모레"로 표시
 // 2일 넘는 날은 날짜(mm/dd) 표시
 //
-export const humanTime = (tick, day) => {
+export const humanTime = (tick, todayName) => {
   const dt = new Date(tick);
   const now = new Date().getTime();
 
@@ -169,7 +169,7 @@ export const humanTime = (tick, day) => {
   let ret = ''
   switch( dayDiff ) {
     case 0:
-      ret = istrue(day) ? '오늘' : hhmm(dt);
+      ret = istrue(todayName) ? '오늘' : hhmm(dt);
       break;
     
     case 1:
@@ -187,6 +187,17 @@ export const humanTime = (tick, day) => {
 
   return ret;
 }
+
+
+/**
+ * 같은 날짜인지 여부 반환
+ * @param {number} tick1 
+ * @param {number} tick2 
+ */
+export const isSameDay = (tick1, tick2) => {
+  return Math.round(tick1 / oneDayTick) === Math.round(tick2 / oneDayTick);
+}
+
 
 /**
  * 객체 obj에 method가 있으면 호출한 결과를 반환하고 없으면 null 반환

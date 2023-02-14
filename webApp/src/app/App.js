@@ -68,12 +68,10 @@ class App extends Component {
     // const pageUrl = window.location.href;
     // const adminMode = pageUrl.endsWith('/admin');
 
-    const appData = new AppData(this,
-      {
-        talkList: talkList,
-        currentBoardID: talkList[0].id,
-      }
-    );
+    const appData = new AppData(this, {
+      talkList: talkList,
+      curTalkIndex: 0,
+    });
 
     this.state = {
       appData,

@@ -31,7 +31,7 @@ export const ScrollStyledDiv = styled.div`
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    display: none;
+    // display: none;
     width: 12px; /*스크롤바의 너비*/
     background-color: ${scrollBGColor}; /*스크롤바의 색상*/
   }

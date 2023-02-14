@@ -11,7 +11,7 @@ import parse from 'html-react-parser';
 
 // Styled Component for TalkBox
 const WrappedBox = styled.div`
-  margin: 10px;
+  margin: 12px;
   display: flex;
   flex-direction: row;
 `;

@@ -31,10 +31,22 @@ class TalkBoard extends Component {
     super(props);
 
     this.state = {};
+    this._sBox = React.createRef();
   }
 
   componentDidMount () {
     connectAppData(this);
+  }
+
+  componentDidUpdate () {
+    const board = this._sBox.current;
+    board.scrollTop = board.scrollHeight;
+  }
+
+  handleScroll = (ev) => {
+    // eslint-disable-next-line
+    const { scrollTop, scrollHeight } = ev.target;
+    // scrollTop가 0이 되면 이전 메시지 가져오기
   }
 
   renderTalks = () => {
@@ -42,14 +54,17 @@ class TalkBoard extends Component {
 
     if( !talkList ) return null;
 
+    const tags = [];
     const curTalk = talkList[curTalkIndex];
 
-    return curTalk.talks.map((d, i) => {
-      return (<>
-        {(i === 0 || mmdd(d.time) !== mmdd(curTalk.talks[i - 1].time)) && <TalkSeparator key={`talksep-${i}`} text={mmdd(d.time)} />}
-        <TalkBox key={`talkitem-${i}`} talk={d} />
-      </>);
+    curTalk.talks.map((d, i) => {
+      if( (i === 0 || mmdd(d.time) !== mmdd(curTalk.talks[i - 1].time)) ) {
+        tags.push( <TalkSeparator key={`talksep-${i}`} text={mmdd(d.time)} /> );
+      }
+      tags.push( <TalkBox key={`talkitem-${i}`} talk={d} /> );
     });
+
+    return tags;
   }
 
   render () {
@@ -59,7 +74,7 @@ class TalkBoard extends Component {
 
     return (
       <WrappedBox>
-        <ScrolledBox>
+        <ScrolledBox ref={this._sBox} onScroll={this.handleScroll}>
           { this.renderTalks() }
         </ScrolledBox>
       </WrappedBox>

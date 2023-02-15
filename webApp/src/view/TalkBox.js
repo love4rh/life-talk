@@ -6,7 +6,6 @@ import { hhmm } from '../common/common';
 import styled from 'styled-components';
 import { Dark as Theme } from '../common/theme';
 
-import parse from 'html-react-parser';
 
 
 // Styled Component for TalkBox
@@ -51,7 +50,7 @@ class TalkBox extends Component {
 
     return (
       <WrappedBox>
-        <TalkText fullWidth={false}>{ parse(text) }</TalkText>
+        <TalkText fullWidth={false}>{ text }</TalkText>
         <TalkTime>{ hhmm(time) }</TalkTime>
       </WrappedBox>
     );

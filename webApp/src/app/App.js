@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { isundef, isvalid } from '../common/common';
 
 import { AppData } from './AppData';
+import { getInitialData } from '../view/actions';
 
 import Proxy from './ServerProxy';
 
@@ -13,9 +14,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { koKR } from '@mui/material/locale';
 
 import MainFrame from '../view/MainFrame';
-
-import { talkList } from '../mock/sample01';
-
 
 
 const darkTheme = createTheme(
@@ -68,10 +66,7 @@ class App extends Component {
     // const pageUrl = window.location.href;
     // const adminMode = pageUrl.endsWith('/admin');
 
-    const appData = new AppData(this, {
-      talkList: talkList,
-      curTalkIndex: 0,
-    });
+    const appData = new AppData(this, getInitialData());
 
     this.state = {
       appData,

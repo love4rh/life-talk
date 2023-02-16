@@ -6,23 +6,26 @@ import { Dark as TM } from '../common/theme';
 import { isundef, makeid, isValidString } from '../common/common';
 
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import { actAddTalk } from './actions';
 
 
 
-const btnSize = '32px';
-const fntSize = '16px'; // must be btnSize / 2
+const btnSize = 36; // '36px';
+const fntSize = 16; // '16px';
+const padSize = (btnSize - fntSize) / 2;
+// (36 - 16 * 2) / 2
 
 const WrappedBox = styled.div`
   border-top: 1px ${TM.inputSepLineColor} solid;
-  min-height: calc(${fntSize} + 10px + 1px);
-  max-height: calc(${fntSize} * 2 + 10px + 1px);
+  min-height: calc(${btnSize}px + 1px);
+  max-height: calc(${fntSize}px * 2 + 10px + 1px);
   overflow: hidden;
   display: flex;
   justify-content: center;
 `;
 
 const TextArea = styled.textarea`
-  padding: 5px;
+  padding: ${padSize}px 5px;
   resize: none;
   border: none;
   flex: 1 1;
@@ -30,9 +33,9 @@ const TextArea = styled.textarea`
   outline: none;
   background-color: ${TM.inputBoxBGColor};
   color: ${TM.fontColor};
-  font-size: ${fntSize};
-  min-height: calc(${fntSize} + 10px);
-  max-height: calc(${fntSize} * 2 + 10px);
+  font-size: ${fntSize}px;
+  min-height: calc(${fntSize}px +  ${padSize *2}px - 2px);
+  max-height: calc(${fntSize}px * 2 +  ${padSize *2}px - 2px);
 
   &::-webkit-scrollbar {
     display: none;
@@ -40,8 +43,8 @@ const TextArea = styled.textarea`
 `;
 
 const SendButton = styled.div`
-  width: ${btnSize};
-  min-height: ${btnSize};
+  width: ${btnSize}px;
+  min-height: ${btnSize}px;
   height: 100%;
   box-sizing: border-box;
   border: 1px solid ${TM.sendButtonBGColor};
@@ -145,10 +148,8 @@ class TalkInput extends Component {
       return;
     }
 
-    console.log('handleAddTalk', text);
-
-    // TODO add text
     this.setState({ talkText: '', maxRow: 1 });
+    actAddTalk(text);
   }
 
   handleAddTalk = () => {

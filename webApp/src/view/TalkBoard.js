@@ -40,19 +40,19 @@ class TalkBoard extends AppComponent {
   handleScroll = (ev) => {
     // eslint-disable-next-line
     const { scrollTop, scrollHeight } = ev.target;
-    // scrollTop가 0이 되면 이전 메시지 가져오기
+    // TODO scrollTop가 0이 되면 이전 메시지 가져오기
   }
 
   renderTalks = () => {
-    const { talkList, curTalkIndex } = this.state;
+    const { curBoard } = this.state;
 
-    if( !talkList ) return null;
+    if( !curBoard ) return null;
 
     const tags = [];
-    const curTalk = talkList[curTalkIndex];
+    const talks = curBoard.talks || [];
 
-    curTalk.talks.map((d, i) => {
-      if( (i === 0 || mmdd(d.time) !== mmdd(curTalk.talks[i - 1].time)) ) {
+    talks.map((d, i) => {
+      if( (i === 0 || mmdd(d.time) !== mmdd(talks[i - 1].time)) ) {
         tags.push( <TalkSeparator key={`talksep-${i}`} text={mmdd(d.time)} /> );
       }
       tags.push( <TalkBox key={`talkitem-${i}`} talk={d} /> );
@@ -63,11 +63,7 @@ class TalkBoard extends AppComponent {
     return tags;
   }
 
-  render () {
-    const { talkList } = this.state;
-
-    if( !talkList ) return null;
-
+  renderComp () {
     return (
       <WrappedBox>
         <ScrolledBox ref={this._sBox} onScroll={this.handleScroll}>

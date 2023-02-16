@@ -56,8 +56,8 @@ class AppData {
     elem.setState({ updatedTick: this.updatedTick, ...this._data_ });
 
     if( !('_onAppDataEvent_' in elem) ) {
-      elem._onAppDataEvent_ = (dataKey, data) => {
-        elem.setState({ [dataKey]: data });
+      elem._onAppDataEvent_ = (dataObj) => {
+        elem.setState(dataObj);
       }
     }
 
@@ -99,30 +99,30 @@ class AppData {
     return this.updatedTick;
   }
 
-  pulseEventToObserver = (dataKey, data) => {
-    if( isundef(dataKey) ) {
-      dataKey = 'updatedTick';
-      data = this.updateTick(true);
-    }
-
-    if( isundef(data) ) {
-      data = {};
+  pulseEventToObserver = (dataObj) => {
+    if( isundef(dataObj) ) {
+      dataObj = { updatedTick: this.updateTick(true) };
     }
 
     this._observer.map((obj, idx) => {
-      obj._onAppDataEvent_(dataKey, data);
+      obj._onAppDataEvent_(dataObj);
       return idx;
     })
   }
+  
+  getData = () => {
+    return this._data_;
+  }
 
-  updateData = (dataKey, data) => {
-    // const oldData = this._data_[dataKey];
-    this._data_[dataKey] = data;
+
+  updateData = (dataObj) => {
+    Object.keys(dataObj).map((k) => {
+      this._data_[k] = dataObj[k];
+      return k;
+    });
+
     this.updateTick(true)
-
-    // console.log('AppData changed [', dataKey, ']', oldData, 'to', data);
-
-    this.pulseEventToObserver(dataKey, data);
+    this.pulseEventToObserver(dataObj);
   }
 };
 
@@ -145,7 +145,7 @@ class AppComponent extends React.Component {
   }
 
   updateData = (dataKey, data) => {
-    updateAppData(dataKey, data);
+    updateAppData({ [dataKey]: data });
   }
 
   renderComp () {
@@ -180,14 +180,24 @@ export const connectAppData = (obj, keys) => {
   _globalAppData_.connect(obj, keys)
 }
 
-export const updateAppData = (dataKey, data) => {
+export const updateAppData = (dataObj) => {
   if( isundef(_globalAppData_) ) {
     console.error('updateAppData', 'global ApData not registered');
     return;
   }
 
-  _globalAppData_.updateData(dataKey, data);
+  _globalAppData_.updateData(dataObj);
 }
+
+export const getAppData = () => {
+  if( isundef(_globalAppData_) ) {
+    console.error('getAppData', 'global ApData not registered');
+    return null;
+  }
+
+  return _globalAppData_.getData();
+}
+
 
 export default AppData;
 export { AppData, AppComponent };

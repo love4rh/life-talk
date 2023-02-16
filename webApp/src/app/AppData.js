@@ -1,3 +1,5 @@
+import React from 'react';
+
 // eslint-disable-next-line
 import { makeid, istrue, tickCount, isvalid, isundef } from '../common/common.js';
 
@@ -5,6 +7,10 @@ import { makeid, istrue, tickCount, isvalid, isundef } from '../common/common.js
 let _globalAppData_ = null;
 
 
+
+/**
+ * Application Data Management Class
+ */
 class AppData {
   constructor (appObj, initialData) {
     if( isundef(_globalAppData_) ) {
@@ -103,9 +109,9 @@ class AppData {
       data = {};
     }
 
-    this._observer.map((obj, i) => {
+    this._observer.map((obj, idx) => {
       obj._onAppDataEvent_(dataKey, data);
-      return i;
+      return idx;
     })
   }
 
@@ -119,6 +125,42 @@ class AppData {
     this.pulseEventToObserver(dataKey, data);
   }
 };
+
+
+
+/**
+ * React component binding to AppData.
+ * componentDidMount() must have super.componentDidMount().
+ * must use renderComp() instead of render()
+ */
+class AppComponent extends React.Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  componentDidMount () {
+    connectAppData(this);
+  }
+
+  updateData = (dataKey, data) => {
+    updateAppData(dataKey, data);
+  }
+
+  renderComp () {
+    return (<></>);
+  }
+
+  render () {
+    const { updatedTick} = this.state;
+
+    if( !updatedTick ) return null;
+
+    return this.renderComp();
+  }
+};
+
 
 
 export const setGlobalAppData = (obj) => {
@@ -144,8 +186,8 @@ export const updateAppData = (dataKey, data) => {
     return;
   }
 
-  _globalAppData_.updateData(dataKey, data)
+  _globalAppData_.updateData(dataKey, data);
 }
 
 export default AppData;
-export { AppData };
+export { AppData, AppComponent };

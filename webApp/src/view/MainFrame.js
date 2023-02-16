@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { connectAppData } from '../app/AppData';
+import { AppComponent } from '../app/AppData';
 
 import { Dark as Theme } from '../common/theme';
 
@@ -14,7 +14,7 @@ import { makeid } from '../common/common';
 
 
 
-class MainFrame extends Component {
+class MainFrame extends AppComponent {
   static propTypes = {
     ch: PropTypes.number.isRequired, // component height
     cw: PropTypes.number.isRequired, // component width
@@ -32,10 +32,6 @@ class MainFrame extends Component {
     };
   }
 
-  componentDidMount () {
-    connectAppData(this);
-  }
-
   static getDerivedStateFromProps(props, prevState) {
     const { cw, ch } = props;
 
@@ -46,10 +42,8 @@ class MainFrame extends Component {
     return null;
   }
 
-  render () {
+  renderComp () {
     const { talkList, curTalkIndex, updatedTick, pageMode, cw } = this.state;
-
-    if( !updatedTick ) return null;
 
     const singleMode = cw < 815;
     const listWidth = singleMode ? Math.min(cw, 760) : Math.min(360, (cw - 5) * 0.32);

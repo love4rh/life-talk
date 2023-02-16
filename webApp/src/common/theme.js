@@ -23,6 +23,10 @@ const Dark = {
 
   inputHeight: 36,
 
+  inputSepLineColor: '#0a0a0a',
+  inputBoxBGColor: '#141414',
+  sendButtonBGColor: '#bcbd22',
+
   selectedBgColor: '#292929',
   hoverBgColor: '#292C29',
   selectedItemColor: '#007FD4',

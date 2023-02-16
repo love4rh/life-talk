@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import styled from 'styled-components';
 
@@ -6,10 +6,9 @@ import * as T from './StyledElements';
 
 import { mmdd } from '../common/common';
 
-import { connectAppData } from '../app/AppData';
+import { AppComponent } from '../app/AppData';
 
-import TalkBox from './TalkBox';
-import TalkSeparator from './TalkSeparator';
+import { TalkBox, TalkSeparator} from './TalkBoxItem';
 
 
 
@@ -26,16 +25,11 @@ export const ScrolledBox = styled(T.ScrollStyledDiv)`
 `;
 
 
-class TalkBoard extends Component {
+class TalkBoard extends AppComponent {
   constructor (props) {
     super(props);
 
-    this.state = {};
     this._sBox = React.createRef();
-  }
-
-  componentDidMount () {
-    connectAppData(this);
   }
 
   componentDidUpdate () {
@@ -62,6 +56,8 @@ class TalkBoard extends Component {
         tags.push( <TalkSeparator key={`talksep-${i}`} text={mmdd(d.time)} /> );
       }
       tags.push( <TalkBox key={`talkitem-${i}`} talk={d} /> );
+
+      return d;
     });
 
     return tags;

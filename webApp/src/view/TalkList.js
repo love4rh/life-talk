@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { connectAppData } from '../app/AppData';
+import { AppComponent } from '../app/AppData';
 import { actChangeBoard } from '../view/actions';
 
 import { humanTime } from '../common/common';
 
-import { Dark as Theme } from '../common/theme';
+import { Dark as TM } from '../common/theme';
 import * as T from './StyledElements';
 
 import ImageMarker from '../component/ImageMarker';
 
 
 
-class TalkList extends Component {
+class TalkList extends AppComponent {
   static propTypes = {
     cw: PropTypes.number.isRequired, // component width
   }
@@ -26,10 +26,6 @@ class TalkList extends Component {
     this.state = {
       cw
     };
-  }
-
-  componentDidMount () {
-    connectAppData(this);
   }
 
   static getDerivedStateFromProps(props, prevState) {
@@ -46,7 +42,7 @@ class TalkList extends Component {
     actChangeBoard(index);
   }
 
-  render () {
+  renderComp () {
     const { cw, talkList, curTalkIndex } = this.state;
 
     if( !talkList ) return null;
@@ -60,9 +56,9 @@ class TalkList extends Component {
             onClick={this.handleClick(idx)}
           >
             <T.ListBoxIcon>
-              <ImageMarker size={Theme.listItemHeight - 16} title={d.title} color={d.color} />
+              <ImageMarker size={TM.listItemHeight - 16} title={d.title} color={d.color} />
             </T.ListBoxIcon>
-            <T.ListBoxBody width={cw - Theme.listItemHeight - 10}>
+            <T.ListBoxBody width={cw - TM.listItemHeight - 10}>
               <T.ListTitleLine>
                 <T.ListBoxTitle>{d.title}</T.ListBoxTitle>
                 <T.ListBoxTime>{humanTime(d.time)}</T.ListBoxTime>

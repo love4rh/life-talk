@@ -1,34 +1,59 @@
 import React, { Component } from 'react';
 
-import { isundef, makeid } from '../common/common';
-
 import styled from 'styled-components';
-import { Dark as T } from '../common/theme';
+import { Dark as TM } from '../common/theme';
+
+import { isundef, makeid, isValidString } from '../common/common';
+
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 
 
+
+const btnSize = '32px';
+const fntSize = '16px'; // must be btnSize / 2
 
 const WrappedBox = styled.div`
-  border: 1px #999 solid;
-  margin: 2px 0;
-  padding: 5px;
-  min-height: calc(1rem + 6px);
-  max-height: calc(2rem + 14px);
+  border-top: 1px ${TM.inputSepLineColor} solid;
+  min-height: calc(${fntSize} + 10px + 1px);
+  max-height: calc(${fntSize} * 2 + 10px + 1px);
   overflow: hidden;
+  display: flex;
+  justify-content: center;
 `;
 
 const TextArea = styled.textarea`
+  padding: 5px;
   resize: none;
   border: none;
-  width: 100%;
+  flex: 1 1;
   box-sizing: border-box;
   outline: none;
-  background-color: ${T.talkPanelColor};
-  color: ${T.fontColor};
-  font-size: 1rem;
-  // min-height: calc(1rem + 6px);
-  // max-height: calc(2rem + 10px);
-  // overflow-y: auto;
-  // overflow-x: hidden;
+  background-color: ${TM.inputBoxBGColor};
+  color: ${TM.fontColor};
+  font-size: ${fntSize};
+  min-height: calc(${fntSize} + 10px);
+  max-height: calc(${fntSize} * 2 + 10px);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const SendButton = styled.div`
+  width: ${btnSize};
+  min-height: ${btnSize};
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid ${TM.sendButtonBGColor};
+  color: ${TM.sendButtonBGColor};
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    border: 1px solid #fff;
+    color: #fff;
+  }
 `;
 
 
@@ -42,7 +67,7 @@ class TalkInput extends Component {
       textAreaID: 'talk-input-' + makeid(8),
       cw,
       talkText: '',
-      rowMax: 1,
+      maxRow: 1,
     };
 
     this._refText = React.createRef();
@@ -71,7 +96,7 @@ class TalkInput extends Component {
     const multiLines = val !== '' && (elem.scrollHeight > elem.clientHeight || val.indexOf('\n') !== -1);
 
     // console.log('setTalkText', val, elem.scrollHeight, elem.clientHeight);
-    this.setState({ talkText: val, rowMax: (multiLines ? 2 : 1) });
+    this.setState({ talkText: val, maxRow: (multiLines ? 2 : 1) });
   }
 
   handlePaste = (ev) => {
@@ -115,17 +140,60 @@ class TalkInput extends Component {
     }
   }
 
+  addText2Talk = (text) => {
+    if( !isValidString(text) ) {
+      return;
+    }
+
+    console.log('handleAddTalk', text);
+
+    // TODO add text
+    this.setState({ talkText: '', maxRow: 1 });
+  }
+
+  handleAddTalk = () => {
+    const { talkText } = this.state;
+
+    this.addText2Talk(talkText);
+  }
+
   handleTextChanged = (ev) => {
     // console.log('TextChanged', ev.target.innerHTML);
     this.setTalkText(ev.target.value);
   }
 
+  handleKeyDown = (ev) => {
+    const { talkText } = this.state;
+    
+    // const { altKey, shiftKey, ctrlKey, keyCode } = ev;
+    const { shiftKey, keyCode } = ev;
+
+    let processed = false;
+    if( shiftKey && keyCode === 13 ) {
+      this.addText2Talk(talkText);
+      processed = true;
+    }
+
+    if( processed ) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+  }
+
   render () {
-    const { textAreaID, talkText, rowMax } = this.state;
+    const { textAreaID, talkText, maxRow } = this.state;
 
     return (
       <WrappedBox style={{ outline: 'none' }}>
-        <TextArea ref={this._refText} id={textAreaID} rows={rowMax} value={talkText} onChange={this.handleTextChanged} />
+        <TextArea
+          ref={this._refText}
+          id={textAreaID}
+          rows={maxRow}
+          value={talkText}
+          onChange={this.handleTextChanged}
+          onKeyDown={this.handleKeyDown}
+        />
+        <SendButton onClick={this.handleAddTalk}><SendOutlinedIcon sx={{ fontSize: 20 }} /></SendButton>
       </WrappedBox>
     );
   }

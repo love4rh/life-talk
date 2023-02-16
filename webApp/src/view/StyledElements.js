@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Dark as Theme } from '../common/theme';
+import { Dark as TM } from '../common/theme';
 
 // refer: https://velog.io/@sorious77/React-Styled-Components-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95-e9o4rnfq
 
@@ -17,7 +17,7 @@ export const WholeBox = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: ${Theme.bgScreen};
+  background-color: ${TM.bgScreen};
 `;
 
 export const Box = styled.div`
@@ -65,11 +65,11 @@ export const VStack = styled.div`
 `;
 
 export const Header = styled.div`
-  height: ${Theme.headerHeight}px;
-  color: ${Theme.titleColor};
-  background-color: ${({ bgColor }) => bgColor || Theme.bgScreen};
+  height: ${TM.headerHeight}px;
+  color: ${TM.titleColor};
+  background-color: ${({ bgColor }) => bgColor || TM.bgScreen};
   width: 100%;
-  border-bottom: 1px solid ${Theme.bgScreen};
+  border-bottom: 1px solid ${TM.bgScreen};
   display: flex;
   align-items: center;
   font-size: 1.1rem;
@@ -83,10 +83,10 @@ export const CenteredHeader = styled(Header)`
 export const Container = styled(ScrollStyledDiv)`
   flex: 1;
   width: 100%;
-  color:  ${Theme.fontColor};;
-  background-color: ${({ bgColor }) => bgColor || Theme.bgScreen};
-  height: calc(100vh - ${Theme.headerHeight}px);
-  border-top: 1px solid ${Theme.bgScreen};
+  color:  ${TM.fontColor};;
+  background-color: ${({ bgColor }) => bgColor || TM.bgScreen};
+  height: calc(100vh - ${TM.headerHeight}px);
+  border-top: 1px solid ${TM.bgScreen};
   display: flex;
   flex-direction: column;
 `;
@@ -97,18 +97,18 @@ export const Container = styled(ScrollStyledDiv)`
 export const ListBox = styled.div`
   flex: 1;
   width: ${({ width }) => width || '100%'};
-  height: calc(100vh - ${Theme.headerHeight}px);
+  height: calc(100vh - ${TM.headerHeight}px);
 `;
 
 export const ListBoxItem = styled.div`
   cursor: pointer;
   display: flex;
-  height: ${Theme.listItemHeight}px;
-  color: ${Theme.fontColor};
-  background-color: ${({ selected }) => selected ? Theme.selectedBgColor : 'inherit'};
+  height: ${TM.listItemHeight}px;
+  color: ${TM.fontColor};
+  background-color: ${({ selected }) => selected ? TM.selectedBgColor : 'inherit'};
 
   &:hover {
-    background-color: ${Theme.hoverBgColor};
+    background-color: ${TM.hoverBgColor};
   }
 
   display: flex;
@@ -117,21 +117,21 @@ export const ListBoxItem = styled.div`
 `;
 
 export const ListBoxLabel = styled.div`
-  height: ${Theme.listItemHeight}px;
-  color: ${Theme.listLabelColor};
+  height: ${TM.listItemHeight}px;
+  color: ${TM.listLabelColor};
   display: flex;
   align-items: center;
   justify-content: center;
   
   /* &:not(:first-child) {
     margin: 5px;
-    border-top: 1px solid ${Theme.separatorColor};
+    border-top: 1px solid ${TM.separatorColor};
   } */
 `;
 
 export const ListBoxIcon = styled.div`
-  width: ${Theme.listItemHeight}px;
-  height: ${Theme.listItemHeight}px;
+  width: ${TM.listItemHeight}px;
+  height: ${TM.listItemHeight}px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,9 +171,9 @@ export const ListBoxMessage = styled.div`
 `;
 
 export const ListBoxTime = styled.div`
-  color: ${Theme.listTimeColor};;
+  color: ${TM.listTimeColor};;
   font-family: monospace;
-  // width: ${Theme.listItemHeight}px;
+  // width: ${TM.listItemHeight}px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -183,6 +183,6 @@ export const ListBoxTime = styled.div`
 
 export const ListBoxSeparator = styled.div`
   margin: 5px;
-  border-bottom: 1px solid ${Theme.separatorColor};
+  border-bottom: 1px solid ${TM.separatorColor};
   content: "";
 `;

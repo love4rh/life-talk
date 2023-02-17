@@ -24,8 +24,7 @@ class AppData {
 
     this.updatedTick = tickCount();
     this._data_ = initialData;
-
-    console.log('AppData constructed', this._data_);
+    // console.log('AppData constructed', this._data_);
   }
 
   unmount = () => {

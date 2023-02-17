@@ -585,7 +585,13 @@ const _insMangler = (p) => {
 }
 
 
-export const hideURL = (s) => {
+/**
+ * 문자열이 바로 들어 아니 않도록 mangling하는 함수.
+ * decryptString() 복구할 수 있음
+ * @param {*} s 
+ * @returns 
+ */
+export const encryptString = (s) => {
   const ds = decSequece;
   const es = encSequece;
 
@@ -595,7 +601,12 @@ export const hideURL = (s) => {
 }
 
 
-export const revealURL = (s) => {
+/**
+ * encryptString()으로 mangling된 문자열을 복구하는 함수
+ * @param {*} s 
+ * @returns 
+ */
+export const decryptString = (s) => {
   const ds = encSequece;
   const es = decSequece;
 
@@ -616,5 +627,31 @@ export const revealURL = (s) => {
 export const extractURLs = (s) => {
   // eslint-disable-next-line
   const urlRegEx = /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)/g;
-  return (s && s.match(urlRegEx)) || [];
+  return (s && s.match(urlRegEx)); //  || [];
+}
+
+
+/**
+ * 입력받은 문자열을 숫자로 변환하는 함수.
+ * 유니크 함이 보장되는 숫자는 아니고 규칙에 따라 숫자로 변환하는 기능 제공.
+ * @param {*} s 
+ */
+export const generateStringHash = (s, maxNum) => {
+  if( !isValidString(s) ) {
+    return 0;
+  }
+
+  let n = 1;
+  const intLimit = 2147483646;
+
+  for(let i = 0; i < s.length; ++i) {
+    n *= s.charCodeAt(i);
+    n %= intLimit;
+  }
+
+  if( isvalid(maxNum) && maxNum > 1 ) {
+    n %= (maxNum + 1);
+  }
+
+  return n;
 }

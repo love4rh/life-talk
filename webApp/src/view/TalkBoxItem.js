@@ -14,6 +14,7 @@ const WrappedBox = styled.div`
   margin: 12px;
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
 `;
 
 const TalkText = styled.div`
@@ -31,6 +32,11 @@ const TalkTime = styled.div`
   font-size: 0.9rem;
 `;
 
+const TalkImage = styled.img`
+  border-radius: 5px;
+  max-width: 80%;
+`;
+
 
 export const TalkBox = (props) => {
   const { talk } = props;
@@ -44,6 +50,38 @@ export const TalkBox = (props) => {
   );
 }
 
+
+export const TalkImageBox = (props) => {
+  const { talk } = props;
+  const { bas64Img, time } = talk;
+
+  return (
+    <WrappedBox>
+      <TalkImage src={bas64Img} />
+      <TalkTime>{ hhmm(time) }</TalkTime>
+    </WrappedBox>
+  );
+}
+
+
+export class TalkURLBox extends React.Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  render () {
+    const { talk } = this.props;
+    const { URLs } = talk;
+
+    return (
+      <WrappedBox>
+        <TalkText fullWidth={true}>{ URLs.join(' | ') }</TalkText>
+      </WrappedBox>
+    );
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Separator Line

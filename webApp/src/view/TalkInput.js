@@ -6,7 +6,7 @@ import { Dark as TM } from '../common/theme';
 import { isundef, makeid, isValidString } from '../common/common';
 
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
-import { actAddTalk } from './actions';
+import { actAddTalk, actAddImage } from './actions';
 
 
 
@@ -100,6 +100,8 @@ class TalkInput extends Component {
 
     // console.log('setTalkText', val, elem.scrollHeight, elem.clientHeight);
     this.setState({ talkText: val, maxRow: (multiLines ? 2 : 1) });
+
+    this._refText.current.focus();
   }
 
   handlePaste = (ev) => {
@@ -110,7 +112,7 @@ class TalkInput extends Component {
       return;
     }
 
-    console.log('on paste', ev.target, item);
+    // console.log('on paste', ev.target, item);
 
     // item.kind: string, file, 
     const dtype = item.type;
@@ -119,17 +121,22 @@ class TalkInput extends Component {
 
     if( dtype.indexOf('image') === 0 ) {
       const blob = item.getAsFile();
-      console.log(blob);
+      
+      // console.log(blob);
 
       const reader = new FileReader();
       reader.onload = (event) => {
-        console.log(event.target.result);
+        const base64Data = event.target.result;
+
+        // console.log(base64Data);
         // document.getElementById("container").src = event.target.result;
+        actAddImage(base64Data);
       };
 
       reader.readAsDataURL(blob); // image blob to base64 encoded string
     } else if( dtype.indexOf('text') === 0 && textAreaID !== ev.target.id ) {
       item.getAsString((data) => {
+        console.log('pasted string', '[', data, ']');
         const { talkText } = this.state;
         this.setTalkText(talkText + data);
       });
@@ -145,17 +152,25 @@ class TalkInput extends Component {
 
   addText2Talk = (text) => {
     if( !isValidString(text) ) {
-      return;
+      return false;
     }
 
     this.setState({ talkText: '', maxRow: 1 });
+
     actAddTalk(text);
+
+    return true;
   }
 
-  handleAddTalk = () => {
+  handleAddTalk = (ev) => {
     const { talkText } = this.state;
+    const isOk = this.addText2Talk(talkText);
 
-    this.addText2Talk(talkText);
+    if( isOk ) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      this._refText.current.focus();
+    }
   }
 
   handleTextChanged = (ev) => {
@@ -171,8 +186,7 @@ class TalkInput extends Component {
 
     let processed = false;
     if( shiftKey && keyCode === 13 ) {
-      this.addText2Talk(talkText);
-      processed = true;
+      processed = this.addText2Talk(talkText);
     }
 
     if( processed ) {

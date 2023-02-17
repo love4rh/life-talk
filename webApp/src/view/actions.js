@@ -1,9 +1,11 @@
 import { getAppData, updateAppData } from '../app/AppData';
-import { tickCount } from '../common/common';
+import { tickCount, extractURLs } from '../common/common';
 
 import { talkList } from '../mock/sample01';
 
 
+
+// TODO server interfacing
 
 export const getInitialData = () => {
   return {
@@ -20,6 +22,13 @@ export const actChangeBoard = (index) => {
 }
 
 
+const _updateTalkBoardData_ = ({ talkList, curTalkIndex, curBoard }) => {
+  talkList = talkList.sort((a, b) => b.time - a.time);
+  curTalkIndex = 0;
+
+  updateAppData({ talkList, curTalkIndex, curBoard });
+}
+
 export const actAddTalk = (text) => {
   let { talkList, curTalkIndex } = getAppData();
   const curBoard = talkList[curTalkIndex];
@@ -28,12 +37,26 @@ export const actAddTalk = (text) => {
 
   curBoard.lastTalk = text;
   curBoard.time = time;
-  curBoard.talks.push({ text, time });
 
-  talkList = talkList.sort((a, b) => b.time - a.time);
-  curTalkIndex = 0;
+  const URLs = extractURLs(text);
+  curBoard.talks.push({ text, time, URLs });
 
-  updateAppData({ talkList, curTalkIndex, curBoard });
+  _updateTalkBoardData_({ talkList, curTalkIndex, curBoard });
+}
+
+
+export const actAddImage = (bas64Img) => {
+  let { talkList, curTalkIndex } = getAppData();
+  const curBoard = talkList[curTalkIndex];
+
+  const time = tickCount();
+
+  curBoard.lastTalk = 'image';
+  curBoard.time = time;
+
+  curBoard.talks.push({ bas64Img, time });
+
+  _updateTalkBoardData_({ talkList, curTalkIndex, curBoard });
 }
 
 

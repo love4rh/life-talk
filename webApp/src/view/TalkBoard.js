@@ -4,11 +4,11 @@ import styled from 'styled-components';
 
 import * as T from './StyledElements';
 
-import { mmdd } from '../common/common';
+import { isvalid, mmdd } from '../common/common';
 
 import { AppComponent } from '../app/AppData';
 
-import { TalkBox, TalkSeparator} from './TalkBoxItem';
+import * as TB from './TalkBoxItem';
 
 
 
@@ -53,9 +53,20 @@ class TalkBoard extends AppComponent {
 
     talks.map((d, i) => {
       if( (i === 0 || mmdd(d.time) !== mmdd(talks[i - 1].time)) ) {
-        tags.push( <TalkSeparator key={`talksep-${i}`} text={mmdd(d.time)} /> );
+        tags.push( <TB.TalkSeparator key={`talksep-${i}`} text={mmdd(d.time)} /> );
       }
-      tags.push( <TalkBox key={`talkitem-${i}`} talk={d} /> );
+
+      if( isvalid(d.text) ) {
+        tags.push( <TB.TalkBox key={`talkitem-${i}`} talk={d} /> );
+      }
+
+      if( isvalid(d.URLs) ) {
+        tags.push( <TB.TalkURLBox key={`urlitem-${i}`} talk={d} /> );
+      }
+
+      if( isvalid(d.bas64Img) ) {
+        tags.push( <TB.TalkImageBox key={`imgitem-${i}`} talk={d} /> );
+      }
 
       return d;
     });

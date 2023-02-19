@@ -20,7 +20,7 @@ logging:
   level: 2 # 1: basic, 2: call parameter & response, 9: packet
   useFile: true
   path: "./log"
-  prefix: "statbase"
+  prefix: "lifeTalk"
 
 data:
   path: "/home/ibs/mhkim/data/statBase"

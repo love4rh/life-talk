@@ -1,4 +1,4 @@
-package com.lge.spp.statbase.service;
+package com.tool4us.lifetalk.service;
 
 import org.json.JSONObject;
 

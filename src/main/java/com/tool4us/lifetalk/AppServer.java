@@ -1,6 +1,6 @@
-package com.lge.spp.statbase;
+package com.tool4us.lifetalk;
 
-import static com.lge.spp.statbase.AppSetting.OPT;
+import static com.tool4us.lifetalk.AppSetting.OPT;
 
 import java.io.File;
 

@@ -1,4 +1,4 @@
-package com.lge.spp.statbase;
+package com.tool4us.lifetalk;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,7 +9,7 @@ import lib.turbok.util.UsefulTool;
 
 
 
-public class AppStatbase
+public class AppLifeTalk
 {
     public static void main(String[] args)
     {

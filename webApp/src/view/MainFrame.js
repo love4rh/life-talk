@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 
 import { AppComponent } from '../app/AppData';
 
-import { Dark as Theme } from '../common/theme';
+import { Dark as TM } from '../common/theme';
 
 import * as T from './StyledElements';
 
 import TalkList from './TalkList';
 import TalkBoard from './TalkBoard';
 import TalkInput from './TalkInput';
-import { makeid } from '../common/common';
 
 
 
@@ -27,8 +26,6 @@ class MainFrame extends AppComponent {
 
     this.state = {
       cw, ch,
-      pageMode: 'list',
-      objID: makeid(16)
     };
   }
 
@@ -55,8 +52,8 @@ class MainFrame extends AppComponent {
 
           { (!singleMode || pageMode === 'list') &&
             <T.VStack width={`${listWidth}px`}>
-              <T.CenteredHeader bgColor={Theme.listPanelColor}>Talk List</T.CenteredHeader>
-              <T.Container bgColor={Theme.listPanelColor}>
+              <T.CenteredHeader bgColor={TM.listPanelColor}>Talk List</T.CenteredHeader>
+              <T.Container bgColor={TM.listPanelColor}>
                 <TalkList cw={listWidth} />
               </T.Container>
             </T.VStack>
@@ -66,8 +63,8 @@ class MainFrame extends AppComponent {
 
           { (!singleMode || pageMode === 'talk') &&
             <T.VStack width={`${talkWidth}px`}>
-              <T.CenteredHeader bgColor={Theme.talkPanelColor}>{curBoard && curBoard.title}</T.CenteredHeader>
-              <T.Container key={`talkarea-${curTalkIndex}`} bgColor={Theme.talkPanelColor}>
+              <T.CenteredHeader bgColor={TM.talkPanelColor}>{curBoard && curBoard.title}</T.CenteredHeader>
+              <T.Container key={`talkarea-${curTalkIndex}`} bgColor={TM.talkPanelColor}>
                 <TalkBoard />
                 <TalkInput />
               </T.Container>

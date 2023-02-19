@@ -57,3 +57,6 @@ package-lock.json
 *.log
 
 *.code-workspace
+
+.vscode/
+

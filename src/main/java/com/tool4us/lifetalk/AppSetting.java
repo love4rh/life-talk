@@ -1,10 +1,10 @@
-package com.lge.spp.statbase;
+package com.tool4us.lifetalk;
 
 import java.io.File;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.tool4us.common.JsonOptions;
+import com.tool4us.common.AppOptions;
 
 import lib.turbok.util.UsefulTool;
 
@@ -19,7 +19,7 @@ public enum AppSetting
 {
     OPT;
 
-    private JsonOptions _options = null;
+    private AppOptions	_options = null;
     private String      _serverID = null;
     
     /**
@@ -53,7 +53,7 @@ public enum AppSetting
     
     private AppSetting()
     {
-        _options = new JsonOptions();
+        _options = new AppOptions();
     }
     
     public void initialize(String configFile) throws Exception

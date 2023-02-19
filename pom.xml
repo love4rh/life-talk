@@ -9,7 +9,7 @@
   
   <properties>
   	<dash.version>0.1.0</dash.version>
-  	<project.java.version>1.11</project.java.version>
+  	<project.java.version>11</project.java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.deploy.target>${project.basedir}/../build</project.deploy.target>
     <project.deploy.lib>${project.basedir}/../lib</project.deploy.lib>
@@ -34,6 +34,13 @@
   </build>
   
   <dependencies>
+  
+  	<dependency>
+      <groupId>com.tool4us</groupId>
+      <artifactId>dash-common</artifactId>
+      <version>${dash.version}</version>
+    </dependency>
+    
   	<dependency>
       <groupId>com.tool4us</groupId>
       <artifactId>dios</artifactId>

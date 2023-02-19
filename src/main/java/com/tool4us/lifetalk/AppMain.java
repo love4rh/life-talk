@@ -1,15 +1,14 @@
-package com.lge.spp.statbase;
+package com.tool4us.lifetalk;
 
-import static com.lge.spp.task.JobQueue.JQ;
-import static com.lge.spp.statbase.AppSetting.OPT;
-import static com.lge.spp.statbase.data.DataBank.Repo;
+import static com.tool4us.common.task.JobQueue.JQ;
+import static com.tool4us.lifetalk.AppSetting.OPT;
 
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 
-import com.lge.spp.task.BatchJobs;
+// import com.lge.spp.task.BatchJobs;
 import com.tool4us.common.Logs;
 
 import lib.turbok.util.DataFileManager;
@@ -25,7 +24,7 @@ import lib.turbok.util.UsefulTool;
 public class AppMain
 {
     private AppServer       _serviceServer = null;
-    private BatchJobs       _batchJob = null;
+    // private BatchJobs       _batchJob = null;
     
     
     public AppMain()
@@ -73,7 +72,7 @@ public class AppMain
         		logFolder = UsefulTool.concat(UsefulTool.GetModulePath(), File.separator, logFolder.substring(2));
         	}
 
-            Logs.initialize(logFolder, prefix == null ? "wau" : prefix);
+            Logs.initialize(logFolder, prefix == null ? "apps" : prefix);
             Logs.addConsoleLogger();
         }
         else
@@ -86,7 +85,7 @@ public class AppMain
         printSettings();
 
         _serviceServer = new AppServer();
-        _serviceServer.start("com.lge.spp.statbase.service", OPT.port(), OPT.bossThreadNum(), OPT.serviceThreadNum());
+        _serviceServer.start("com.tool4us.lifetalk.service", OPT.port(), OPT.bossThreadNum(), OPT.serviceThreadNum());
         
         if( OPT.withConsole() )
         {
@@ -103,11 +102,11 @@ public class AppMain
 		Logs.info("deleting files in temporay folder...");
         DataFileManager.deleteTempFiles(-1);
 
+        /*
         Logs.info("starting batch job thread...");
         _batchJob = new BatchJobs();
         _batchJob.start();
-        
-        Repo.reload();
+        // */
     }
 	
 	private void printSettings()
@@ -179,8 +178,8 @@ public class AppMain
         JQ.end();
         _serviceServer.stop();
         
-        if( _batchJob != null )
-            _batchJob.end();
+//        if( _batchJob != null )
+//            _batchJob.end();
     }
     
     public void test(String keyword)

@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import { AppComponent } from '../app/AppData';
 import { actChangeBoard } from '../view/actions';
 
-import { humanTime } from '../common/common';
+import { humanTime, tickCount } from '../common/common';
 
 import { Dark as TM } from '../common/theme';
 import * as T from './StyledElements';
 
 import ImageMarker from '../component/ImageMarker';
+
+import { showModalMenu } from '../app/App';
 
 
 
@@ -17,14 +19,42 @@ const TalkListItem = (props) => {
   const { cw, data, idx, selected, ...rest } = props;
   const { title, color, time, lastTalk } = data;
 
+  const [ downTick, setDownTick ] = useState(0);
+
   const handleClick = () => {
     actChangeBoard(idx);
+  }
+
+  const handleMouseDown = (ev) => {
+    setDownTick( tickCount() );
+  }
+
+  const handleMouseUp = (ev) => {
+    const pressTime = tickCount() - downTick;
+
+    if( pressTime > 650 ) {
+      ev.preventDefault();
+      ev.stopPropagation();
+
+      console.log('Long Pressed', idx);
+      showModalMenu({
+        title: 'Talk List Menu',
+        menuList: [ 'Menu 1', 'Menu 2'],
+        callback: (res) => {
+          console.log(`${res} selected`);
+        }
+      })
+    }
   }
 
   return (
     <T.ListBoxItem
       selected={selected}
       onClick={handleClick}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onTouchStart={handleMouseDown}
+      onTouchEnd={handleMouseUp}
       {...rest}
     >
       <T.ListBoxIcon>

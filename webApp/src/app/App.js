@@ -58,6 +58,9 @@ const T = {
 };
 
 
+// 유일 App 객체
+let _appInstance_ = null;
+
 
 class App extends Component {
   constructor (props) {
@@ -66,7 +69,7 @@ class App extends Component {
     // const pageUrl = window.location.href;
     // const adminMode = pageUrl.endsWith('/admin');
 
-    const appData = new AppData(this, getInitialData());
+    const appData = new AppData(getInitialData());
 
     this.state = {
       appData,
@@ -84,6 +87,11 @@ class App extends Component {
   }
 
   componentDidMount () {
+    if( _appInstance_ === null ) {
+      _appInstance_ = this;
+    }
+
+    this.state.appData.connect(this);
     window.addEventListener('resize', this.onWindowResize);
   }
 
@@ -96,12 +104,12 @@ class App extends Component {
   }
 
   /**
-   * 
-   * @param {string} msg message to be shown
+   * show instant message
+   * @param {string} message message to be shown
    * @param {string} severity one of [info error warning success]. default: info
    * @param {number} duration showing time in ms. default: 3500
    */
-  showInstantMessage = (msg, severity, duration) => {
+  showToast = ({ message, severity, duration }) => {
     if( isundef(severity) ) {
       severity = 'info';
     }
@@ -109,7 +117,9 @@ class App extends Component {
       duration = 3500;
     }
 
-    this.setState({ message: msg, severity, duration });
+    console.log('App showToast called', message, severity, duration);
+
+    this.setState({ message, severity, duration });
   }
 
   enterWaiting = () => {
@@ -167,4 +177,26 @@ class App extends Component {
   }
 }
 
+
+/**
+   * 
+   * @param {string} message message to be shown
+   * @param {string} severity one of [info error warning success]. default: info
+   * @param {number} duration showing time in ms. default: 3500
+   */
+export const showToast = ({ message, severity, duration }) => {
+  if( _appInstance_ === null ) {
+    return;
+  }
+
+  _appInstance_.showToast({ message, severity, duration });
+}
+
+
+export const showModalMenu = ({ title, menuList, callback }) => {
+  console.log('showModalMenu', title, menuList, callback);
+}
+
+
 export default App;
+export { App };

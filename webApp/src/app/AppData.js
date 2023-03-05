@@ -12,12 +12,11 @@ let _globalAppData_ = null;
  * Application Data Management Class
  */
 class AppData {
-  constructor (appObj, initialData) {
+  constructor (initialData) {
     if( isundef(_globalAppData_) ) {
       _globalAppData_ = this;
     }
 
-    this._app = appObj;
     this._appDataID = makeid(16);
 
     this._observer = [];
@@ -30,10 +29,6 @@ class AppData {
   unmount = () => {
     // unmount 시 해야 할 일들
     this._observer = [];
-  }
-
-  showInstantMessage = (msg, severity, duration) => {
-    this._app.showInstantMessage(msg, severity, duration);
   }
 
   /**

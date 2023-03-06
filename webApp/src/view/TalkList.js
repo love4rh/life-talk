@@ -32,16 +32,15 @@ const TalkListItem = (props) => {
   const handleMouseUp = (ev) => {
     const pressTime = tickCount() - downTick;
 
-    if( pressTime > 650 ) {
+    if( pressTime > 350 ) {
       ev.preventDefault();
       ev.stopPropagation();
 
-      console.log('Long Pressed', idx);
       showModalMenu({
-        title: 'Talk List Menu',
-        menuList: [ 'Menu 1', 'Menu 2'],
-        callback: (res) => {
-          console.log(`${res} selected`);
+        title,
+        itemList: [ 'Modify the Talk', 'Delete the Talk'],
+        callback: (idx) => {
+          console.log(`${idx} selected.`);
         }
       })
     }

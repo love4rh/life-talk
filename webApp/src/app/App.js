@@ -9,6 +9,7 @@ import { getInitialData } from '../view/actions';
 import Proxy from './ServerProxy';
 
 import { Snackbar, Alert, Slide, CircularProgress } from '@mui/material';
+import { SimpleDialog } from '../component/SimpleDialog';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { koKR } from '@mui/material/locale';
@@ -80,7 +81,8 @@ class App extends Component {
       authorized: true,
       severity: 'info', // error warning success
       duration: 3500,
-      message: null
+      message: null,
+      simpleMenu: null,
     };
 
     Proxy.setWaitHandle(this.enterWaiting, this.leaveWaiting);
@@ -122,6 +124,10 @@ class App extends Component {
     this.setState({ message, severity, duration });
   }
 
+  showSimpleMenu = ({ title, itemList, callback }) => {
+    this.setState({ simpleMenu: {title, itemList, callback} });
+  }
+
   enterWaiting = () => {
     this.setState({ waiting: true });
   }
@@ -141,7 +147,18 @@ class App extends Component {
     }
 
     this.setState({ message: null });
-  };
+  }
+
+  handleMenuSelected = (selectedIdx) => {
+    const { simpleMenu } = this.state;
+    const { callback } = simpleMenu;
+
+    if( callback ) {
+      callback(selectedIdx);
+    }
+
+    this.setState({ simpleMenu: null });
+  }
 
   renderPage () {
     const { cw, ch } = this.state;
@@ -150,8 +167,10 @@ class App extends Component {
   }
 
   render () {
-    const { initialized, authorized, waiting, message, severity, duration } = this.state;
+    const { initialized, authorized, waiting, message, severity, duration, simpleMenu } = this.state;
+    
     const messageOn = isvalid(message);
+    const menuOn = isvalid(simpleMenu);
 
     // Snackbar severity="success" error warning info 
 
@@ -169,6 +188,15 @@ class App extends Component {
           >
             <Alert elevation={6} variant="filled" onClose={this.handleCloseSnackbar} severity={severity} sx={{ width: '100%' }}>{message}</Alert>
           </Snackbar>
+        }
+
+        { menuOn &&
+          <SimpleDialog
+            title={simpleMenu.title}
+            itemList={simpleMenu.itemList}
+            onClose={this.handleMenuSelected}
+            open={menuOn}
+          />
         }
 
         { authorized && waiting && <T.Overay><CircularProgress /></T.Overay> }
@@ -193,8 +221,12 @@ export const showToast = ({ message, severity, duration }) => {
 }
 
 
-export const showModalMenu = ({ title, menuList, callback }) => {
-  console.log('showModalMenu', title, menuList, callback);
+export const showModalMenu = ({ title, itemList, callback }) => {
+  if( _appInstance_ === null ) {
+    return;
+  }
+
+  _appInstance_.showSimpleMenu({ title, itemList, callback });
 }
 
 

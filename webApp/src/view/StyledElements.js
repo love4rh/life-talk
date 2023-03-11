@@ -64,21 +64,6 @@ export const VStack = styled.div`
   flex-direction: column;
 `;
 
-export const Header = styled.div`
-  height: ${TM.headerHeight}px;
-  color: ${TM.titleColor};
-  background-color: ${({ bgColor }) => bgColor || TM.bgScreen};
-  width: 100%;
-  border-bottom: 1px solid ${TM.bgScreen};
-  display: flex;
-  align-items: center;
-  font-size: 1.1rem;
-  font-weight: bold;
-`;
-
-export const CenteredHeader = styled(Header)`
-  justify-content: center;
-`;
 
 export const Container = styled(ScrollStyledDiv)`
   flex: 1;

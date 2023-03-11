@@ -2,10 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { AppComponent } from '../app/AppData';
+import { actGoBackToList } from './actions';
 
 import { Dark as TM } from '../common/theme';
 
 import * as T from './StyledElements';
+
+import AddIcon from '@mui/icons-material/Add';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+import Header from './Header';
 
 import TalkList from './TalkList';
 import TalkBoard from './TalkBoard';
@@ -39,6 +45,10 @@ class MainFrame extends AppComponent {
     return null;
   }
 
+  handleAddTalkBoard = () => {
+    console.log('handleAddTalkBoard clicked');
+  }
+
   renderComp () {
     const { curBoard, curTalkIndex, updatedTick, pageMode, cw } = this.state;
 
@@ -49,10 +59,20 @@ class MainFrame extends AppComponent {
     return (
       <T.WholeBox key={`main-wrap-${updatedTick}`}>
         <T.HStack>
-
           { (!singleMode || pageMode === 'list') &&
             <T.VStack width={`${listWidth}px`}>
-              <T.CenteredHeader bgColor={TM.listPanelColor}>Talk List</T.CenteredHeader>
+              <Header
+                ch={TM.headerHeight}
+                cw={listWidth}
+                color={TM.titleColor}
+                bgColor={TM.listPanelColor}
+                borderColor={TM.bgScreen}
+                center={true}
+                tailButton={{ onClick: this.handleAddTalkBoard, element: <AddIcon size="medium" /> }}
+              >
+                Talk List
+              </Header>
+
               <T.Container bgColor={TM.listPanelColor}>
                 <TalkList cw={listWidth} />
               </T.Container>
@@ -63,7 +83,29 @@ class MainFrame extends AppComponent {
 
           { (!singleMode || pageMode === 'talk') &&
             <T.VStack width={`${talkWidth}px`}>
-              <T.CenteredHeader bgColor={TM.talkPanelColor}>{curBoard && curBoard.title}</T.CenteredHeader>
+              { singleMode
+                ? <Header
+                    ch={TM.headerHeight}
+                    cw={talkWidth}
+                    color={TM.titleColor}
+                    bgColor={TM.talkPanelColor}
+                    borderColor={TM.bgScreen}
+                    center={false}
+                    headButton={{ onClick: actGoBackToList, element: <ArrowBackIcon size="medium" /> }}
+                  >
+                    {curBoard && curBoard.title}
+                  </Header>
+                : <Header
+                    ch={TM.headerHeight}
+                    cw={talkWidth}
+                    color={TM.titleColor}
+                    bgColor={TM.talkPanelColor}
+                    borderColor={TM.bgScreen}
+                    center={true}
+                  >
+                    {curBoard && curBoard.title}
+                  </Header>
+              }
               <T.Container key={`talkarea-${curTalkIndex}`} bgColor={TM.talkPanelColor}>
                 <TalkBoard />
                 <TalkInput />

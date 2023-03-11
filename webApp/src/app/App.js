@@ -85,6 +85,8 @@ class App extends Component {
       simpleMenu: null,
     };
 
+    this._appRect = React.createRef();
+
     Proxy.setWaitHandle(this.enterWaiting, this.leaveWaiting);
   }
 
@@ -102,7 +104,12 @@ class App extends Component {
   }
 
   onWindowResize = () => {
-    this.setState({ cw: window.innerWidth, ch: window.innerHeight });
+    if( this._appRect.current ){
+      const { clientWidth, clientHeight } = this._appRect.current;
+      this.setState({ cw: clientWidth, ch: clientHeight });
+    } else {
+      this.setState({ cw: window.innerWidth, ch: window.innerHeight });
+    }
   }
 
   /**
@@ -162,7 +169,6 @@ class App extends Component {
 
   renderPage () {
     const { cw, ch } = this.state;
-
     return <MainFrame cw={cw} ch={ch} />;
   }
 
@@ -174,9 +180,12 @@ class App extends Component {
 
     // Snackbar severity="success" error warning info 
 
-    return (<T.App>
+    return (<T.App ref={this._appRect}>
       <ThemeProvider theme={darkTheme}>
-        { initialized ? this.renderPage() : <T.WholeMessage>Initializing...</T.WholeMessage> }
+        { initialized
+            ? this.renderPage()
+            : <T.WholeMessage>Initializing...</T.WholeMessage>
+        }
 
         { messageOn && 
           <Snackbar

@@ -59,7 +59,7 @@ const TalkListItem = (props) => {
       <T.ListBoxIcon>
         <ImageMarker size={TM.listItemHeight - 16} title={title} color={color} />
       </T.ListBoxIcon>
-      <T.ListBoxBody width={cw - TM.listItemHeight - 10}>
+      <T.ListBoxBody width={cw - TM.listItemHeight - 30}>
         <T.ListTitleLine>
           <T.ListBoxTitle>{title}</T.ListBoxTitle>
           <T.ListBoxTime>{humanTime(time)}</T.ListBoxTime>

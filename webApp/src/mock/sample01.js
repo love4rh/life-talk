@@ -17,7 +17,11 @@ const base64Image = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAJjCAYAA
 
 
 const generateSamples = () => {
-  const titles = [ '일상', '업무', '아무개1', 'This is message title to test long lines.' ];
+  const titles = [ '일상', '업무', '아무개1', 'This is message title to test long lines.',
+    '인물 특징', '가나다라마', 'TEST TALK', '인물 특징 #2', '가나다라마 #2', 'TEST TALK #2',
+    '인물 특징 #3', '가나다라마 #3', 'TEST TALK #3', '인물 특징 #4', '가나다라마 #4', 'TEST TALK #4',
+    '인물 특징 #5', '가나다라마 #5', 'TEST TALK #5', '인물 특징 #6', '가나다라마 #6', 'TEST TALK #6'
+  ];
 
   return titles.map((t, i) => {
     const lastTime = tickCount() - randomInteger(oneDayTick * i, oneDayTick * (i + 0.5));

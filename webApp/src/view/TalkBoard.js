@@ -1,28 +1,26 @@
 import React from 'react';
-
 import styled from 'styled-components';
-
-import * as T from './StyledElements';
+import { AppComponent } from '../app/AppData';
 
 import { isvalid, mmdd } from '../common/common';
 
-import { AppComponent } from '../app/AppData';
-
+import * as T from './StyledElements';
 import * as TB from './TalkBoxItem';
 
 
 
 // Styled Component for TalkBox
-export const WrappedBox = styled.div`
+const WrappedBox = styled.div`
   flex: 1 1;
   overflow: hidden;
 `;
 
-export const ScrolledBox = styled(T.ScrollStyledDiv)`
+const ScrolledBox = styled(T.ScrollStyledDiv)`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 `;
+
 
 
 class TalkBoard extends AppComponent {

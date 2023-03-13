@@ -14,6 +14,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Header from './Header';
 
 import TalkList from './TalkList';
+import TalkEditor from './TalkEditor';
 import TalkBoard from './TalkBoard';
 import TalkInput from './TalkInput';
 
@@ -59,7 +60,7 @@ class MainFrame extends AppComponent {
     return (
       <T.WholeBox key={`main-wrap-${updatedTick}`}>
         <T.HStack>
-          { (!singleMode || pageMode === 'list') &&
+          { ((!singleMode && pageMode !== 'edit') || pageMode === 'list') &&
             <T.VStack width={`${listWidth}px`}>
               <Header
                 ch={TM.headerHeight}
@@ -70,12 +71,18 @@ class MainFrame extends AppComponent {
                 center={true}
                 tailButton={{ onClick: this.handleAddTalkBoard, element: <AddIcon size="medium" /> }}
               >
-                Talk List
+                { 'Talk List' }
               </Header>
 
               <T.Container bgColor={TM.listPanelColor}>
                 <TalkList cw={listWidth} />
               </T.Container>
+            </T.VStack>
+          }
+
+          { pageMode === 'edit' &&
+            <T.VStack width={`${listWidth}px`}>
+              <TalkEditor cw={listWidth} index={curTalkIndex} board={curBoard} />
             </T.VStack>
           }
 

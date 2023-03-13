@@ -9,7 +9,7 @@ import { talkList } from '../mock/sample01';
 
 export const getInitialData = () => {
   return {
-    pageMode: 'list', // list, talk
+    pageMode: 'list', // list, talk, edit
     talkList: talkList,
     curTalkIndex: 0,
     curBoard: talkList[0]
@@ -25,6 +25,12 @@ export const actGoBackToList = () => {
 export const actChangeBoard = (index) => {
   const { talkList } = getAppData();
   updateAppData({ pageMode: 'talk', curTalkIndex: index, curBoard: talkList[index] });
+}
+
+
+export const actEditBoard = (index) => {
+  const { talkList } = getAppData();
+  updateAppData({ pageMode: 'edit', curTalkIndex: index, curBoard: talkList[index] });
 }
 
 

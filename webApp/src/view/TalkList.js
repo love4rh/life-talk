@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { AppComponent } from '../app/AppData';
-import { actChangeBoard } from '../view/actions';
+import { actChangeBoard, actEditBoard } from '../view/actions';
 
 import { humanTime, tickCount } from '../common/common';
 
@@ -11,7 +11,7 @@ import * as T from './StyledElements';
 
 import ImageMarker from '../component/ImageMarker';
 
-import { showModalMenu } from '../app/App';
+// import { showModalMenu } from '../app/App';
 
 
 
@@ -36,13 +36,16 @@ const TalkListItem = (props) => {
       ev.preventDefault();
       ev.stopPropagation();
 
+      actEditBoard(idx);
+
+      /*
       showModalMenu({
         title,
         itemList: [ 'Modify the Talk', 'Delete the Talk'],
-        callback: (idx) => {
-          console.log(`${idx} selected.`);
+        callback: (si) => {
+          console.log(`${si} selected.`);
         }
-      })
+      }); // */
     }
   }
 

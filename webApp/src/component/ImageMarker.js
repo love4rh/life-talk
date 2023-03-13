@@ -24,12 +24,12 @@ class ImageMarker extends Component {
   render () {
     const { size, color, title } = this.state;
 
-    const cx = size / 2;
+    const mp = size / 2;
 
     return (
       <svg width={size} height={size}>
-        <circle cx={cx} cy={cx} r={cx} stroke="none" strokeWidth="0" fill={color} />
-        <text x={cx} y={cx - 1} fill={'white'} textAnchor={`middle`} dominantBaseline={`central`}>{title[0]}</text>
+        <circle cx={mp} cy={mp} r={mp} stroke="none" strokeWidth="0" fill={color} />
+        <text x={mp} y={mp} fill={'white'} textAnchor={`middle`} dominantBaseline={`central`}>{title[0]}</text>
       </svg>
     );
   }

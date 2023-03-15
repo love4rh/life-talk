@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
 
-import { isundef } from '../common/common';
+import { randomInteger, isundef } from '../common/common';
 
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -14,7 +16,7 @@ import {
 } from '@mui/material/colors';
 
 
-const ColorMap = {
+const DefinedColorMap = {
   red, pink, purple, deepPurple,
   indigo, blue, lightBlue, cyan,
   teal, green, lightGreen, lime,
@@ -68,6 +70,12 @@ class ColorPicker extends Component {
     );
   }
 };
+
+
+export const getRandomColor = () => {
+  const colorKeys = Object.keys(DefinedColorMap);
+  return DefinedColorMap[colorKeys[randomInteger(0, colorKeys.length - 1)]]['800'];
+}
 
 
 export default ColorPicker;

@@ -1,4 +1,5 @@
 import { tickCount, oneDayTick, randomInteger } from '../common/common';
+import { getRandomColor } from '../component/ColorPicker';
 
 
 const circleColor = [
@@ -48,7 +49,7 @@ const generateSamples = () => {
     return {
       id: `TALK-${i}`,
       title: t,
-      color: circleColor[i % circleColor.length],
+      color: getRandomColor(), // circleColor[i % circleColor.length],
       lastTalk: talks[talks.length - 1].text || 'image',
       time: talks[talks.length - 1].time,
       talks

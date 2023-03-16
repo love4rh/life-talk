@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { AppComponent } from '../app/AppData';
-import { actChangeBoard, actEditBoard } from '../view/actions';
+import { actChangeBoard, actGoEditBoard } from '../view/actions';
 
 import { humanTime, tickCount } from '../common/common';
 
@@ -36,7 +36,7 @@ const TalkListItem = (props) => {
       ev.preventDefault();
       ev.stopPropagation();
 
-      actEditBoard(idx);
+      actGoEditBoard(idx);
 
       /*
       showModalMenu({

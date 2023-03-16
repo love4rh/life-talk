@@ -10,33 +10,40 @@ import { Header } from './Header';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckIcon from '@mui/icons-material/Check';
 
-import { actGoBackToList } from './actions';
+import { actAddOrChangeTalkBoard, actGoBackToList } from './actions';
 
 import TextField from '@mui/material/TextField';
+import ColorPicker from '../component/ColorPicker';
 
 
-const EditBody = styled.div`
-  padding: 10px;
+const EditLine = styled.div`
+  margin: 10px 10px 20px 10px;
+`;
+
+const EditTitle = styled.div`
+  color: ${TM.talkEditTitleColor};
+  margin-bottom: 7px;
 `;
 
 
 
 class TalkEditor extends React.Component {
   static propTypes = {
-    // full screen or dialog
-    index: PropTypes.number.isRequired, // talk board index for editing
-    board: PropTypes.object.isRequired, // talk board object for editing
+    index: PropTypes.number.isRequired, // talk board index for editing. -1이면 신규 보드 추가
+    data: PropTypes.object.isRequired, // talk board object for editing. There must be title, color.
     cw: PropTypes.number.isRequired, // component width
   }
 
   constructor (props) {
     super(props);
 
-    const { cw, board } = this.props;
+    const { index, cw, data } = this.props;
 
     this.state = {
+      index,
       cw,
-      title: board.title
+      title: data.title,
+      color: data.color
     };
   }
 
@@ -51,8 +58,9 @@ class TalkEditor extends React.Component {
   }
 
   handleConfirm = () => {
-    // TODO update changes
+    const { index, title, color } = this.state;
 
+    actAddOrChangeTalkBoard(index, title, color);
     actGoBackToList();
   }
 
@@ -62,8 +70,12 @@ class TalkEditor extends React.Component {
     this.setState({ title: me.value });
   }
 
+  handleColorChanged = (color) => {
+    this.setState({ color });
+  }
+
   render () {
-    const { cw, title } = this.state;
+    const { index, cw, title, color } = this.state;
 
     return (<>
       <Header
@@ -76,20 +88,26 @@ class TalkEditor extends React.Component {
         headButton={{ onClick: actGoBackToList, element: <ArrowBackIcon size="medium" /> }}
         tailButton={{ onClick: this.handleConfirm, element: <CheckIcon size="medium" /> }}
       >
-        {'Edit Talk'}
+        { index === -1 ? 'Add Talk' : 'Edit Talk' }
       </Header>
 
       <T.Container bgColor={TM.listPanelColor}>
-        <EditBody>
+        <EditLine>
+          <EditTitle>Talk Title</EditTitle>
           <TextField
             required
             fullWidth
-            label="Talk Title"
+            label=""
             value={title}
             variant="standard"
             onChange={this.handleChangeTitle}
           />
-        </EditBody>
+        </EditLine>
+
+        <EditLine>
+          <EditTitle>Marker Color</EditTitle>
+          <ColorPicker cw={cw - 20} color={color} onChanged={this.handleColorChanged} />
+        </EditLine>
       </T.Container>
     </>);
   }

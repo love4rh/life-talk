@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { AppComponent } from '../app/AppData';
-import { actGoBackToList } from './actions';
+import { actGoBackToList, actAddNewBoard } from './actions';
 
-import { Dark as TM } from '../common/theme';
+import { Dark as TM, getRandomColor } from '../common/theme';
 
 import * as T from './StyledElements';
 
@@ -47,7 +47,7 @@ class MainFrame extends AppComponent {
   }
 
   handleAddTalkBoard = () => {
-    console.log('handleAddTalkBoard clicked');
+    actAddNewBoard('Untitled', getRandomColor());
   }
 
   renderComp () {
@@ -82,7 +82,7 @@ class MainFrame extends AppComponent {
 
           { pageMode === 'edit' &&
             <T.VStack width={`${listWidth}px`}>
-              <TalkEditor cw={listWidth} index={curTalkIndex} board={curBoard} />
+              <TalkEditor cw={listWidth} index={curTalkIndex} data={curBoard} />
             </T.VStack>
           }
 

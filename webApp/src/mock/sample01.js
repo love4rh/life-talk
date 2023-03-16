@@ -1,10 +1,10 @@
-import { tickCount, oneDayTick, randomInteger } from '../common/common';
-import { getRandomColor } from '../component/ColorPicker';
+import { makeid, tickCount, oneDayTick, randomInteger } from '../common/common';
+import { getRandomColor } from '../common/theme';
 
 
-const circleColor = [
-  '#1f77b4', '#ff7f0e', '#9467bd', '#2ca02c', '#8c564b', '#e377c2'
-];
+// const circleColor = [
+//   '#1f77b4', '#ff7f0e', '#9467bd', '#2ca02c', '#8c564b', '#e377c2'
+// ];
 
 const messagePool = [
   'I want...\nThis would be a nice talking board.',
@@ -47,7 +47,7 @@ const generateSamples = () => {
     talks = talks.sort((a, b) => a.time - b.time);
 
     return {
-      id: `TALK-${i}`,
+      id: `TALK-${makeid(16)}`,
       title: t,
       color: getRandomColor(), // circleColor[i % circleColor.length],
       lastTalk: talks[talks.length - 1].text || 'image',

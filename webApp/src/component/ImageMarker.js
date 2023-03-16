@@ -29,7 +29,7 @@ class ImageMarker extends Component {
     return (
       <svg width={size} height={size}>
         <circle cx={mp} cy={mp} r={mp} stroke="none" strokeWidth="0" fill={color} />
-        <text x={mp} y={mp} fill={'white'} textAnchor={`middle`} dominantBaseline={`central`}>{title[0]}</text>
+        <text x={mp} y={mp - 1} fill={'white'} textAnchor={`middle`} dominantBaseline={`central`}>{title[0]}</text>
       </svg>
     );
   }

@@ -22,6 +22,8 @@ const WrappedBox = styled.div`
   overflow: hidden;
   display: flex;
   justify-content: center;
+  background-color: ${TM.inputBoxBGColor};
+  padding: 0 5px;
 `;
 
 const TextArea = styled.textarea`
@@ -47,7 +49,7 @@ const SendButton = styled.div`
   min-height: ${btnSize}px;
   height: 100%;
   box-sizing: border-box;
-  border: 1px solid ${TM.sendButtonBGColor};
+  // border: 1px solid ${TM.sendButtonBGColor};
   color: ${TM.sendButtonBGColor};
   overflow: hidden;
   display: flex;

@@ -41,9 +41,9 @@ export const actAddNewBoard = (title, color) => {
 
 /**
  * Talk Board 추가 및 변경
- * @param {*} index -1이면 추가임. 0보다 크면 해당 Talk Board 속성 변경
- * @param {*} title 
- * @param {*} color 
+ * @param {number} index -1이면 추가임. 0보다 크면 해당 Talk Board 속성 변경
+ * @param {string} title Talk Board 제목
+ * @param {string} color color string like #xxxxxx
  */
 export const actAddOrChangeTalkBoard = (index, title, color) => {
   // TODO 서버 전달

@@ -5,15 +5,17 @@ import { AppComponent } from '../app/AppData';
 import { actGoBackToList, actAddNewBoard } from './actions';
 
 import { Dark as TM, getRandomColor } from '../common/theme';
+import { $L } from '../app/LangPack';
 
 import * as T from './StyledElements';
 
+import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import Header from './Header';
 
-import TalkList from './TalkList';
+import TalkBoardList from './TalkBoardList';
 import TalkEditor from './TalkEditor';
 import TalkBoard from './TalkBoard';
 import TalkInput from './TalkInput';
@@ -46,8 +48,12 @@ class MainFrame extends AppComponent {
     return null;
   }
 
+  handleOpenMenu = () => {
+    //
+  }
+
   handleAddTalkBoard = () => {
-    actAddNewBoard('Untitled', getRandomColor());
+    actAddNewBoard('', getRandomColor());
   }
 
   renderComp () {
@@ -69,13 +75,14 @@ class MainFrame extends AppComponent {
                 bgColor={TM.listPanelColor}
                 borderColor={TM.bgScreen}
                 center={true}
+                headButton={{ onClick: this.handleOpenMenu, element: <MenuIcon size="medium" /> }}
                 tailButton={{ onClick: this.handleAddTalkBoard, element: <AddIcon size="medium" /> }}
               >
-                { 'Talk List' }
+                { $L('Talk List') }
               </Header>
 
               <T.Container bgColor={TM.listPanelColor}>
-                <TalkList cw={listWidth} />
+                <TalkBoardList cw={listWidth} />
               </T.Container>
             </T.VStack>
           }

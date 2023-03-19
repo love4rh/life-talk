@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { AppComponent } from '../app/AppData';
-import { actChangeBoard, actGoEditBoard } from '../view/actions';
+import { actChangeBoard, actGoEditBoard } from './actions';
 
-import { humanTime, tickCount } from '../common/common';
+import { isundef, humanTime, tickCount } from '../common/common';
 
 import { Dark as TM } from '../common/theme';
 import * as T from './StyledElements';
@@ -19,33 +19,27 @@ const TalkListItem = (props) => {
   const { cw, data, idx, selected, ...rest } = props;
   const { title, color, time, lastTalk } = data;
 
-  const [ downTick, setDownTick ] = useState(0);
+  const [ downEvt, setDownEvt ] = useState(null);
 
   const handleClick = () => {
     actChangeBoard(idx);
   }
 
   const handleMouseDown = (ev) => {
-    setDownTick( tickCount() );
+    setDownEvt({ tick: tickCount(), x: ev.clientX, y: ev.clientY });
   }
 
   const handleMouseUp = (ev) => {
-    const pressTime = tickCount() - downTick;
+    if( isundef(downEvt) ) {
+      return;
+    }
 
-    if( pressTime > 350 ) {
+    const pressTime = tickCount() - downEvt.tick;
+
+    if( pressTime > 350 && Math.abs(ev.clientX - downEvt.x) < 5 && Math.abs(ev.clientY - downEvt.y) < 5 ) {
       ev.preventDefault();
       ev.stopPropagation();
-
       actGoEditBoard(idx);
-
-      /*
-      showModalMenu({
-        title,
-        itemList: [ 'Modify the Talk', 'Delete the Talk'],
-        callback: (si) => {
-          console.log(`${si} selected.`);
-        }
-      }); // */
     }
   }
 
@@ -75,7 +69,7 @@ const TalkListItem = (props) => {
 }
 
 
-class TalkList extends AppComponent {
+class TalkBoardList extends AppComponent {
   static propTypes = {
     cw: PropTypes.number.isRequired, // component width
   }
@@ -116,4 +110,4 @@ class TalkList extends AppComponent {
 
 };
 
-export default TalkList;
+export default TalkBoardList;

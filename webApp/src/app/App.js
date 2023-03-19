@@ -125,8 +125,7 @@ class App extends Component {
     if( isundef(duration) ) {
       duration = 3500;
     }
-
-    console.log('App showToast called', message, severity, duration);
+    // console.log('App showToast called', message, severity, duration);
 
     this.setState({ message, severity, duration });
   }
@@ -221,7 +220,7 @@ class App extends Component {
    * @param {string} severity one of [info error warning success]. default: info
    * @param {number} duration showing time in ms. default: 3500
    */
-export const showToast = ({ message, severity, duration }) => {
+export const showToast = (message, severity, duration) => {
   if( _appInstance_ === null ) {
     return;
   }

@@ -5,9 +5,9 @@ import static com.tool4us.lifetalk.AppSetting.OPT;
 import java.io.File;
 
 import com.tool4us.common.Logs;
+import com.tool4us.lifetalk.common.LifeTalkAuth;
 import com.tool4us.net.http.IStaticFileMap;
 import com.tool4us.net.http.TomyApiFilter;
-import com.tool4us.net.http.TomyAuthentication;
 import com.tool4us.net.http.TomyServer;
 
 import lib.turbok.task.TaskQueue;
@@ -36,8 +36,8 @@ public class AppServer implements IStaticFileMap
      
         Logs.info("Starting App Service Server at port {}.", port);
 
-        // TODO remove true in parameter
-        _serverBase = new TomyServer( handlerPackage, this, new TomyApiFilter[] { new TomyAuthentication(OPT.checkAuth()) } );
+        // TODO remove true(OPT.checkAuth()) in parameter
+        _serverBase = new TomyServer( handlerPackage, this, new TomyApiFilter[] { new LifeTalkAuth(OPT.checkAuth()) } );
         _serverBase.start(port, boss, worker, OPT.loggingLevel());
 
         _taskQueue.startQueue(2, "AppServer Batch");

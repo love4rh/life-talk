@@ -5,8 +5,13 @@ import styled from 'styled-components';
 import * as T from './StyledElements';
 
 import { Dark as TM } from '../common/theme';
+import { isValidString } from '../common/common';
+
+import { showToast } from '../app/App';
+import { $L } from '../app/LangPack';
 
 import { Header } from './Header';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -60,7 +65,14 @@ class TalkEditor extends React.Component {
   handleConfirm = () => {
     const { index, title, color } = this.state;
 
-    actAddOrChangeTalkBoard(index, title, color);
+    const cTitle = title.trim();
+
+    if( !isValidString(cTitle) ) {
+      showToast($L('Talk Board shoud have Title.'), 'warning');
+      return;
+    }
+
+    actAddOrChangeTalkBoard(index, cTitle, color);
     actGoBackToList();
   }
 
@@ -88,16 +100,17 @@ class TalkEditor extends React.Component {
         headButton={{ onClick: actGoBackToList, element: <ArrowBackIcon size="medium" /> }}
         tailButton={{ onClick: this.handleConfirm, element: <CheckIcon size="medium" /> }}
       >
-        { index === -1 ? 'Add Talk' : 'Edit Talk' }
+        { index === -1 ? $L('Add Talk') : $L('Edit Talk') }
       </Header>
 
       <T.Container bgColor={TM.listPanelColor}>
         <EditLine>
-          <EditTitle>Talk Title</EditTitle>
+          <EditTitle>{ $L('Talk Title') }</EditTitle>
           <TextField
             required
             fullWidth
             label=""
+            placeholder={$L('enter title.')}
             value={title}
             variant="standard"
             onChange={this.handleChangeTitle}
@@ -105,7 +118,7 @@ class TalkEditor extends React.Component {
         </EditLine>
 
         <EditLine>
-          <EditTitle>Marker Color</EditTitle>
+          <EditTitle>{ $L('Marker Color') }</EditTitle>
           <ColorPicker cw={cw - 20} color={color} onChanged={this.handleColorChanged} />
         </EditLine>
       </T.Container>

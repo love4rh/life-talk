@@ -144,6 +144,7 @@ export const ListBoxTitle = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  user-select: none;
 `;
 
 export const ListBoxMessage = styled.div`
@@ -153,6 +154,7 @@ export const ListBoxMessage = styled.div`
   white-space: nowrap;
   // flex: 1 1 auto;
   overflow: hidden;
+  user-select: none;
 `;
 
 export const ListBoxTime = styled.div`

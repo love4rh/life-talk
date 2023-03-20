@@ -25,18 +25,20 @@ const TalkListItem = (props) => {
     actChangeBoard(idx);
   }
 
-  const handleMouseDown = (ev) => {
-    setDownEvt({ tick: tickCount(), x: ev.clientX, y: ev.clientY });
+  const handleMouseDown = (touch) => (ev) => {
+    const p = touch ? ev.touches[0] : ev;
+    setDownEvt({ tick: tickCount(), x: p.clientX, y: p.clientY });
   }
 
-  const handleMouseUp = (ev) => {
+  const handleMouseUp = (touch) => (ev) => {
     if( isundef(downEvt) ) {
       return;
     }
 
+    const p = touch ? ev.changedTouches[0] : ev;
     const pressTime = tickCount() - downEvt.tick;
 
-    if( pressTime > 350 && Math.abs(ev.clientX - downEvt.x) < 5 && Math.abs(ev.clientY - downEvt.y) < 5 ) {
+    if( pressTime > 350 && Math.abs(p.clientX - downEvt.x) < 5 && Math.abs(p.clientY - downEvt.y) < 5 ) {
       ev.preventDefault();
       ev.stopPropagation();
       actGoEditBoard(idx);
@@ -47,10 +49,10 @@ const TalkListItem = (props) => {
     <T.ListBoxItem
       selected={selected}
       onClick={handleClick}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onTouchStart={handleMouseDown}
-      onTouchEnd={handleMouseUp}
+      onMouseDown={handleMouseDown(false)}
+      onMouseUp={handleMouseUp(false)}
+      onTouchStart={handleMouseDown(true)}
+      onTouchEnd={handleMouseUp(true)}
       {...rest}
     >
       <T.ListBoxIcon>

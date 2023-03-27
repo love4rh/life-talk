@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-import { makeidWithChecksum, tickCount, SHA256, isundef } from '../common/common.js';
+import { makeidWithChecksum, tickCount, SHA256, isundef } from './common.js';
 
 let { hostURL, debugOn } = window.$appConfig$;
 
-// hostURL = revealURL(hostURL);
+// hostURL = decryptURL(hostURL);
 
 const _userToken = makeidWithChecksum(8);
 

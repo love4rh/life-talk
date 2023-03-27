@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Dark as TM } from '../common/theme';
+import { Dark as TM } from '../app/theme';
 
 // refer: https://velog.io/@sorious77/React-Styled-Components-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95-e9o4rnfq
 

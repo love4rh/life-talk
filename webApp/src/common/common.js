@@ -579,19 +579,17 @@ const _indexInString = (s, c) => {
   return -1;
 }
 
-
 const _insMangler = (p) => {
   return Math.random() > p ? magSequece.charAt(Math.floor(Math.random() * magSequece.length)) : '';
 }
 
-
 /**
- * 문자열이 바로 들어 아니 않도록 mangling하는 함수.
- * decryptString() 복구할 수 있음
+ * 문자열이 바로 들어 나지 않도록 mangling하는 함수.
+ * decryptURL() 복구할 수 있음
  * @param {*} s 
  * @returns 
  */
-export const encryptString = (s) => {
+export const encryptURL = (s) => {
   const ds = decSequece;
   const es = encSequece;
 
@@ -600,13 +598,12 @@ export const encryptString = (s) => {
   }).join('');
 }
 
-
 /**
- * encryptString()으로 mangling된 문자열을 복구하는 함수
+ * encryptURL()으로 mangling된 문자열을 복구하는 함수
  * @param {*} s 
  * @returns 
  */
-export const decryptString = (s) => {
+export const decryptURL = (s) => {
   const ds = encSequece;
   const es = decSequece;
 

@@ -6,7 +6,7 @@ import { isundef, isvalid } from '../common/common';
 import { AppData } from './AppData';
 import { getInitialData } from '../view/actions';
 
-import Proxy from './ServerProxy';
+import Proxy from '../common/ServerProxy';
 
 import { Snackbar, Alert, Slide, CircularProgress } from '@mui/material';
 import { SimpleDialog } from '../component/SimpleDialog';
@@ -208,7 +208,7 @@ class App extends Component {
         }
 
         { authorized && waiting && <T.Overay><CircularProgress /></T.Overay> }
-       </ThemeProvider>
+      </ThemeProvider>
     </T.App>);
   }
 }

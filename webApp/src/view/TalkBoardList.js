@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { AppComponent } from '../app/AppData';
 import { actChangeBoard, actGoEditBoard } from './actions';
 
-import { isundef, humanTime, tickCount } from '../common/common';
+import { humanTime } from '../common/common';
 
-import { Dark as TM } from '../common/theme';
+import { useLongPress, LongPressDetectEvents} from 'use-long-press';
+
+import { Dark as TM } from '../app/theme';
 import * as T from './StyledElements';
 
 import ImageMarker from '../component/ImageMarker';
@@ -19,40 +21,30 @@ const TalkListItem = (props) => {
   const { cw, data, idx, selected, ...rest } = props;
   const { title, color, time, lastTalk } = data;
 
-  const [ downEvt, setDownEvt ] = useState(null);
+  // const [ downEvt, setDownEvt ] = useState(null);
+
+  const bind = useLongPress(() => {
+    actGoEditBoard(idx);
+  }, {
+    // onStart: () => console.log("Press started"),
+    // onFinish: () => console.log("Long press finished"),
+    // onCancel: () => console.log("Press cancelled"),
+    // onMove: () => console.log("Detected mouse or touch movement"),
+    threshold: 550,
+    captureEvent: true,
+    cancelOnMovement: true,
+    detect: LongPressDetectEvents.BOTH
+  });
 
   const handleClick = () => {
     actChangeBoard(idx);
-  }
-
-  const handleMouseDown = (touch) => (ev) => {
-    const p = touch ? ev.touches[0] : ev;
-    setDownEvt({ tick: tickCount(), x: p.clientX, y: p.clientY });
-  }
-
-  const handleMouseUp = (touch) => (ev) => {
-    if( isundef(downEvt) ) {
-      return;
-    }
-
-    const p = touch ? ev.changedTouches[0] : ev;
-    const pressTime = tickCount() - downEvt.tick;
-
-    if( pressTime > 350 && Math.abs(p.clientX - downEvt.x) < 5 && Math.abs(p.clientY - downEvt.y) < 5 ) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      actGoEditBoard(idx);
-    }
   }
 
   return (
     <T.ListBoxItem
       selected={selected}
       onClick={handleClick}
-      onMouseDown={handleMouseDown(false)}
-      onMouseUp={handleMouseUp(false)}
-      onTouchStart={handleMouseDown(true)}
-      onTouchEnd={handleMouseUp(true)}
+      {...bind()}
       {...rest}
     >
       <T.ListBoxIcon>

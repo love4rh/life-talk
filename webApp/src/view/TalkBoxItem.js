@@ -3,7 +3,7 @@ import React from 'react';
 import { hhmm } from '../common/common';
 
 import styled from 'styled-components';
-import { Dark as TM } from '../common/theme';
+import { Dark as TM } from '../app/theme';
 
 
 

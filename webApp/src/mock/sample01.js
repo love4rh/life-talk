@@ -1,5 +1,5 @@
 import { makeid, tickCount, oneDayTick, randomInteger } from '../common/common';
-import { getRandomColor } from '../common/theme';
+import { getRandomColor } from '../app/theme';
 
 
 // const circleColor = [

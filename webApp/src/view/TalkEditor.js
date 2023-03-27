@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import * as T from './StyledElements';
 
-import { Dark as TM } from '../common/theme';
+import { Dark as TM } from '../app/theme';
 import { isValidString } from '../common/common';
 
 import { showToast } from '../app/App';

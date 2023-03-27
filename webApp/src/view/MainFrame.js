@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { AppComponent } from '../app/AppData';
 import { actGoBackToList, actAddNewBoard } from './actions';
 
-import { Dark as TM, getRandomColor } from '../common/theme';
+import { Dark as TM, getRandomColor } from '../app/theme';
 import { $L } from '../app/LangPack';
 
 import * as T from './StyledElements';

@@ -6,7 +6,7 @@ import { isundef, isvalid } from '../common/common';
 import { AppData } from './AppData';
 import { getInitialData } from '../view/actions';
 
-import Proxy from '../common/ServerProxy';
+import { setWaitingHandle } from '../common/TomyConnector';
 
 import { Snackbar, Alert, Slide, CircularProgress } from '@mui/material';
 import { SimpleDialog } from '../component/SimpleDialog';
@@ -87,7 +87,7 @@ class App extends Component {
 
     this._appRect = React.createRef();
 
-    Proxy.setWaitHandle(this.enterWaiting, this.leaveWaiting);
+    setWaitingHandle(this.enterWaiting, this.leaveWaiting);
   }
 
   componentDidMount () {

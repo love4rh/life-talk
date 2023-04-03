@@ -17,13 +17,13 @@ const padSize = (btnSize - fntSize) / 2;
 
 const WrappedBox = styled.div`
   border-top: 1px ${TM.inputSepLineColor} solid;
-  min-height: calc(${btnSize}px + 1px);
-  max-height: calc(${fntSize}px * 2 + 10px + 1px);
+  min-height: calc(${btnSize}px + 6px);
+  max-height: calc(${fntSize}px * 2 + 10px + 6px);
   overflow: hidden;
   display: flex;
   justify-content: center;
   background-color: ${TM.inputBoxBGColor};
-  padding: 0 5px;
+  padding: 0 5px 5px 5px;
 `;
 
 const TextArea = styled.textarea`

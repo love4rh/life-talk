@@ -1,0 +1,12 @@
+# User information file
+version: 1.0
+users:
+  - uuid: "ud-ofsubilPMdtS8XhBJpyMlfIMJ9J0lE90"
+    name: "TurboK"
+    email: "love4rh@paran.com"
+    pw: "encrypted password"
+
+  - uuid: "ud-gyJdm4ptP0o3Zx5plUWEGiHxmcAEcg5U"
+    name: "아무개2"
+    email: "abc2@test.com"
+    pw: "encrypted password"

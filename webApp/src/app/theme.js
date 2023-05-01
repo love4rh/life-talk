@@ -8,6 +8,7 @@ import {
   brown, grey, blueGrey
 } from '@mui/material/colors';
 
+
 const _colorMap_ = {
   red, pink, purple, deepPurple,
   indigo, blue, lightBlue, cyan,
@@ -17,6 +18,7 @@ const _colorMap_ = {
 };
 
 const _colorKeys_ = Object.keys(_colorMap_);
+const _defShade = '400';
 
 
 /**
@@ -26,7 +28,7 @@ const _colorKeys_ = Object.keys(_colorMap_);
  */
 export const getRandomColor = (shade) => {
   if( isundef(shade) ) {
-    shade = '500';
+    shade = _defShade;
   }
 
   return _colorMap_[_colorKeys_[randomInteger(0, _colorKeys_.length - 1)]][shade];
@@ -40,7 +42,7 @@ export const getRandomColor = (shade) => {
  */
 export const getColor = (hue, shade) => {
   if( isundef(shade) ) {
-    shade = '500';
+    shade = _defShade;
   }
 
   return _colorMap_[hue][shade];

@@ -1,0 +1,13 @@
+# Talk List
+version: 1.0
+
+talkList:
+  - uuid: "tb-aUhWcTV1DnI8zLJjE04rxycyRpYhSp1Y"
+    name: "기본"
+    color: "#ec407a"
+    created: 1681939489872
+
+  - uuid: "tb-roYmXtIzaXwdRWYULiTkaiuqqIRJkW4A"
+    name: "일상"
+    color: "#42a5f5"
+    created: 1682039489872

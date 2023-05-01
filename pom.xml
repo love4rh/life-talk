@@ -34,7 +34,7 @@
   </build>
   
   <dependencies>
-  
+
   	<dependency>
       <groupId>com.tool4us</groupId>
       <artifactId>dash-common</artifactId>
@@ -52,6 +52,19 @@
       <artifactId>dash-network</artifactId>
       <version>${dash.version}</version>
     </dependency>
+    
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>4.1.72.Final</version>
+    </dependency>
+    
+    <dependency>
+	  <groupId>org.json</groupId>
+	  <artifactId>json</artifactId>
+	  <version>20201115</version>
+	</dependency>
+
   </dependencies>
   
 </project>

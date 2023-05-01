@@ -4,21 +4,15 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Icon from '@mui/material/Icon';
 
-import {
-  red, pink, purple, deepPurple,
-  indigo, blue, lightBlue, cyan,
-  teal, green, lightGreen, lime,
-  yellow, amber, orange, deepOrange
-} from '@mui/material/colors';
+import { getColor } from '../app/theme';
+
 
 const _colorList_ = [
-  [red, pink, purple, deepPurple],
-  [indigo, blue, lightBlue, cyan],
-  [teal, green, lightGreen, lime],
-  [yellow, amber, orange, deepOrange]
+  ['red', 'pink', 'purple', 'deepPurple'],
+  ['indigo', 'blue', 'lightBlue', 'cyan'],
+  ['teal', 'green', 'lightGreen', 'lime'],
+  ['brown', 'amber', 'orange', 'deepOrange']
 ];
-
-
 
 const ItemLine = styled.div`
   display: flex;
@@ -87,7 +81,7 @@ class ColorPicker extends Component {
         { _colorList_.map((C, i) => (
           <ItemLine key={`colorLine-${i}`}>
             { C.map((clr, j) => {
-              const c = clr['500'];
+              const c = getColor(clr);
 
               return (
                 <ItemBox

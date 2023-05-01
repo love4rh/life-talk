@@ -2,6 +2,7 @@ package com.tool4us.lifetalk;
 
 import static com.tool4us.common.task.JobQueue.JQ;
 import static com.tool4us.lifetalk.AppSetting.OPT;
+import static com.tool4us.lifetalk.data.TalkUsers.TU;
 
 
 import java.io.BufferedReader;
@@ -81,8 +82,13 @@ public class AppMain
             Logs.addConsoleLogger();
         }
 
-        initialize();
         printSettings();
+        
+        if( !initialize() )
+    	{
+        	System.err.println("failed to initialize!");
+        	return;
+    	}
 
         _serviceServer = new AppServer();
         _serviceServer.start("com.tool4us.lifetalk.service", OPT.port(), OPT.bossThreadNum(), OPT.serviceThreadNum());
@@ -93,8 +99,14 @@ public class AppMain
         }
     }
 
-	private void initialize() throws Exception
+	private boolean initialize() throws Exception
     {
+		boolean isOK = true;
+		
+		String userFile = OPT.getDataPath() + File.separator + "users.yml";
+		
+		TU.initialize(userFile);
+		
         // NetOnSetting.C.initialize(OPT.temporaryFolder(), false, null);
 		Logs.info("starting job doing threads...");
 		JQ.begin(2);
@@ -107,6 +119,8 @@ public class AppMain
         _batchJob = new BatchJobs();
         _batchJob.start();
         // */
+        
+        return isOK;
     }
 	
 	private void printSettings()

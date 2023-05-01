@@ -107,8 +107,8 @@ public enum AppSetting
 
         if( _temporaryFolder == null )
             _temporaryFolder = UsefulTool.GetModulePath() + File.separator + "temporary";
-        
-        _dataPath = _options.getAsString("data/path");
+
+        _dataPath = optionFolder("data");
     }
     
     public int port()

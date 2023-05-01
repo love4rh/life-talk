@@ -1,9 +1,12 @@
+# settings for life-talk server
+
 app:
-  id: "spp-statbase"
-  name: "Dashboard for Sponsored"
+  id: "life-talk"
+  name: "Life Talk server"
   version: 1.0
 
 folder:
+  data: "./data"
   temporary: "./temporary"
   vroot: "./webApp/build"
 
@@ -21,6 +24,3 @@ logging:
   useFile: true
   path: "./log"
   prefix: "lifeTalk"
-
-data:
-  path: "/home/ibs/mhkim/data/statBase"
